@@ -3,3 +3,4 @@ Cornell cs3110sp Final Team Project
 
 # Team Members:
   - Haoxuan Zou (hz252)
+  - James Liu (zl293)
