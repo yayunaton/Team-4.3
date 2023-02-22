@@ -5,3 +5,4 @@ Cornell cs3110sp23 Final Team Project
   - Haoxuan Zou (hz252)
   - James Liu (zl293)
   - Yiyuan Chen (yc823)
+  - Rachel Jiang (tj232)
