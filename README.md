@@ -6,3 +6,9 @@ Cornell cs3110sp23 Final Team Project
   - James Liu (zl293)
   - Yiyuan Chen (yc823)
   - Rachel Jiang (tj232)
+
+# Notes:
+Primary Executable: bin/main.ml
+Backend Functions: lib/functions
+
+remember to change functions.mli if changes are made to functions.ml
