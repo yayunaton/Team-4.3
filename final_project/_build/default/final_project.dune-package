@@ -1,4 +1,35 @@
 (lang dune 3.7)
 (name final_project)
-(sections (lib .) (bin ../../bin))
-(files (lib (META dune-package opam)) (bin (final_project)))
+(sections (lib .) (libexec .))
+(files
+ (lib
+  (META
+   dune-package
+   functions.a
+   functions.cma
+   functions.cmi
+   functions.cmt
+   functions.cmti
+   functions.cmx
+   functions.cmxa
+   functions.ml
+   functions.mli
+   opam))
+ (libexec (functions.cmxs)))
+(library
+ (name final_project)
+ (kind normal)
+ (archives (byte functions.cma) (native functions.cmxa))
+ (plugins (byte functions.cma) (native functions.cmxs))
+ (native_archives functions.a)
+ (requires ANSITerminal)
+ (main_module_name Functions)
+ (modes byte native)
+ (modules
+  (singleton
+   (obj_name functions)
+   (visibility public)
+   (source
+    (path Functions)
+    (intf (path functions.mli))
+    (impl (path functions.ml))))))

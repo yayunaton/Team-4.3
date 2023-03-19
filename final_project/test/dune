@@ -1,2 +1,3 @@
-(test
- (name final_project))
+(executable
+ (name main)
+ (libraries final_project ounit2))
