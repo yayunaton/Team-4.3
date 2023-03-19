@@ -1,0 +1,20 @@
+lib: [
+  "_build/install/default/lib/final_project/META"
+  "_build/install/default/lib/final_project/dune-package"
+  "_build/install/default/lib/final_project/functions.a"
+  "_build/install/default/lib/final_project/functions.cma"
+  "_build/install/default/lib/final_project/functions.cmi"
+  "_build/install/default/lib/final_project/functions.cmt"
+  "_build/install/default/lib/final_project/functions.cmti"
+  "_build/install/default/lib/final_project/functions.cmx"
+  "_build/install/default/lib/final_project/functions.cmxa"
+  "_build/install/default/lib/final_project/functions.ml"
+  "_build/install/default/lib/final_project/functions.mli"
+  "_build/install/default/lib/final_project/opam"
+]
+libexec: [
+  "_build/install/default/lib/final_project/functions.cmxs"
+]
+doc: [
+  "_build/install/default/doc/final_project/README.md"
+]
