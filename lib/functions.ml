@@ -22,6 +22,9 @@ let rec summary (b : event list) =
       | { eventName } -> eventName)
       ^ summary t
 
+(**let help_function fun_name = if fun_name = "" then "summary: would print a
+   string of all records, each record separated by a comma \n " else *)
+
 let read_lines file process =
   let in_ch = open_in file in
   let rec read_line () =

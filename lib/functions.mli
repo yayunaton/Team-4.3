@@ -17,37 +17,28 @@ val summary : event list -> string
 (** [summary lst] would print a string of all info in lst, each info separated
     by a comma *)
 
-(** help_function takes a function name and return the spec of that function 
-    if it exists. *)
-(* val help_function : string -> string  *)
+(** help_function takes a function name and return the spec of that function if
+    it exists. *)
+(* val help_function : string -> string *)
 
-(** event_to_string takes in an event an outputs a string that 
-    contains all the information in this event. *)
+(** event_to_string takes in an event an outputs a string that contains all the
+    information in this event. *)
 (* val event_to_string: event -> string *)
 
-(** input_event takes four parameters: 
-    name of the event (string);
-    name of the payer (string);
-    event participants' names (string list);
-    bill amount (float),
-    and outputs the event that is created. *)
+(** input_event takes four parameters: name of the event (string); name of the
+    payer (string); event participants' names (string list); bill amount
+    (float), and outputs the event that is created. *)
 (* val input_event: string -> string -> string list -> float -> event *)
 
 (** print_all_event outputs all the events that the user input before. *)
 (* val print_all_event: _ -> event list *)
 
-(** name_search_event takes the name (OR ID?? TBD) of the event and returns that 
-    event if it exists. If it doesn't exist, it will return an 
-    empty event (format TBD).*)
-(* val name_search_event: string -> event  *)
+(** name_search_event takes the name (OR ID?? TBD) of the event and returns that
+    event if it exists. If it doesn't exist, it will return an empty event
+    (format TBD).*)
+(* val name_search_event: string -> event *)
 
-(** delete_event takes the name (OR ID?? TBD) of the event and delete 
-    the corresponding event if it exists. It returns the event if it is 
-    deleted or an empty event if it does not exist.  *)
+(** delete_event takes the name (OR ID?? TBD) of the event and delete the
+    corresponding event if it exists. It returns the event if it is deleted or
+    an empty event if it does not exist. *)
 (* val delete_event: string -> event; *)
-
-
-
-
-
-
