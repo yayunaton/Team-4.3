@@ -1,4 +1,3 @@
-
 type info = {a:string}
 let rec summary (b:info list) = match  b with
 | [] -> "none"
