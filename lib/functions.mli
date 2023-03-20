@@ -17,6 +17,10 @@ val summary : event list -> string
 (** [summary lst] would print a string of all info in lst, each info separated
     by a comma *)
 
-(* val inputEvent: string -> string -> string list -> float -> event *)
+(* val input_event: string -> string -> string list -> float -> event *)
 
+(* val print_all_event: _ -> event list *)
 
+(* val name_search_event: string -> event  *)
+
+(* val event_to_string: event -> string *)
