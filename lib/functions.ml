@@ -1,13 +1,12 @@
-<<<<<<< HEAD
-type info = {a:string}
-let rec summary (b:info list) = match  b with
+
+
+type event = {a:string}
+let rec summary (b:event list) = match  b with
 | [] -> "none"
 | [h] -> (match h with {a} -> a)
 | h::t -> (match h with {a} -> a)^summary t
-=======
-type info = { a : string }
 
-let rec summary (b : info list) =
+let rec summary (b : event list) =
   match b with
   | [] -> "none"
   | [ h ] -> (
@@ -17,7 +16,6 @@ let rec summary (b : info list) =
       (match h with
       | { a } -> a)
       ^ summary t
->>>>>>> 563bf4a07c740b631099a4ef4c833f01adc1eaf8
 
 let read_lines file process =
   let in_ch = open_in file in
