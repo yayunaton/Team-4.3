@@ -1,15 +1,26 @@
 type event = {
-  eventName:string; 
-  (* payerName: string;
-  participants: string list;
-  billAmount: float;
-  id: int; *)
+  eventName : string;
+      (* payerName: string; participants: string list; billAmount: float; id:
+         int; *)
 }
 (* type user = {a:string} *)
-let rec summary (b:event list) = match  b with
-| [] -> "none"
-| [h] -> (match h with {eventName} -> eventName)
-| h::t -> (match h with {eventName} -> eventName)^summary t
+
+(**type user = {
+  name : string;
+  bill : event list;
+  debt : (string * float) list;
+}*)
+
+let rec summary (b : event list) =
+  match b with
+  | [] -> "none"
+  | [ h ] -> (
+      match h with
+      | { eventName } -> eventName)
+  | h :: t ->
+      (match h with
+      | { eventName } -> eventName)
+      ^ summary t
 
 let read_lines file process =
   let in_ch = open_in file in

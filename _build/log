@@ -1,9 +1,9 @@
 # dune exec ./bin/main.exe
 # OCAMLPARAM: unset
 # Shared cache: disabled
-# Workspace root: /Users/porridge/Desktop/courses/CS3110/Team-4.3
-# Auto-detected concurrency: 8
-$ /Users/porridge/.opam/cs3110-2023sp/bin/ocamlc.opt -config > /var/folders/8m/8g9q1n6n41l6dw8d_ltmrvym0000gn/T/dune_64294f_output
+# Workspace root: /Users/owner/Desktop/CS_3110/Team-4.3
+# Auto-detected concurrency: 10
+$ /Users/owner/.opam/cs3110-2023sp/bin/ocamlc.opt -config > /var/folders/nh/6d45fqx90g953z9pfd4nkydw0000gn/T/dune_5edf5f_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -13,45 +13,39 @@ $ /Users/porridge/.opam/cs3110-2023sp/bin/ocamlc.opt -config > /var/folders/8m/8
 #  ; fdo_target_exe = None
 #  ; build_dir = In_build_dir "default"
 #  ; toplevel_path =
-#      Some External "/Users/porridge/.opam/cs3110-2023sp/lib/toplevel"
-#  ; ocaml_bin = External "/Users/porridge/.opam/cs3110-2023sp/bin"
-#  ; ocaml = Ok External "/Users/porridge/.opam/cs3110-2023sp/bin/ocaml"
-#  ; ocamlc = External "/Users/porridge/.opam/cs3110-2023sp/bin/ocamlc.opt"
-#  ; ocamlopt =
-#      Ok External "/Users/porridge/.opam/cs3110-2023sp/bin/ocamlopt.opt"
-#  ; ocamldep =
-#      Ok External "/Users/porridge/.opam/cs3110-2023sp/bin/ocamldep.opt"
+#      Some External "/Users/owner/.opam/cs3110-2023sp/lib/toplevel"
+#  ; ocaml_bin = External "/Users/owner/.opam/cs3110-2023sp/bin"
+#  ; ocaml = Ok External "/Users/owner/.opam/cs3110-2023sp/bin/ocaml"
+#  ; ocamlc = External "/Users/owner/.opam/cs3110-2023sp/bin/ocamlc.opt"
+#  ; ocamlopt = Ok External "/Users/owner/.opam/cs3110-2023sp/bin/ocamlopt.opt"
+#  ; ocamldep = Ok External "/Users/owner/.opam/cs3110-2023sp/bin/ocamldep.opt"
 #  ; ocamlmklib =
-#      Ok External "/Users/porridge/.opam/cs3110-2023sp/bin/ocamlmklib.opt"
+#      Ok External "/Users/owner/.opam/cs3110-2023sp/bin/ocamlmklib.opt"
 #  ; env =
 #      map
-#        { "DUNE_OCAML_HARDCODED" : "/Users/porridge/.opam/cs3110-2023sp/lib"
-#        ; "DUNE_OCAML_STDLIB" :
-#            "/Users/porridge/.opam/cs3110-2023sp/lib/ocaml"
-#        ; "DUNE_SOURCEROOT" :
-#            "/Users/porridge/Desktop/courses/CS3110/Team-4.3"
+#        { "DUNE_OCAML_HARDCODED" : "/Users/owner/.opam/cs3110-2023sp/lib"
+#        ; "DUNE_OCAML_STDLIB" : "/Users/owner/.opam/cs3110-2023sp/lib/ocaml"
+#        ; "DUNE_SOURCEROOT" : "/Users/owner/Desktop/CS_3110/Team-4.3"
 #        ; "INSIDE_DUNE" :
-#            "/Users/porridge/Desktop/courses/CS3110/Team-4.3/_build/default"
-#        ; "MANPATH" :
-#            "/Users/porridge/Desktop/courses/CS3110/Team-4.3/_build/install/default/bin"
+#            "/Users/owner/Desktop/CS_3110/Team-4.3/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/Users/porridge/Desktop/courses/CS3110/Team-4.3/_build/install/default/lib"
+#            "/Users/owner/Desktop/CS_3110/Team-4.3/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/Users/porridge/Desktop/courses/CS3110/Team-4.3/_build/install/default/lib"
+#            "/Users/owner/Desktop/CS_3110/Team-4.3/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/Users/porridge/Desktop/courses/CS3110/Team-4.3/_build/install/default/lib/toplevel"
+#            "/Users/owner/Desktop/CS_3110/Team-4.3/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }
-#  ; findlib_paths = [ External "/Users/porridge/.opam/cs3110-2023sp/lib" ]
+#  ; findlib_paths = [ External "/Users/owner/.opam/cs3110-2023sp/lib" ]
 #  ; arch_sixtyfour = true
 #  ; natdynlink_supported = true
 #  ; supports_shared_libraries = true
 #  ; ocaml_config =
 #      { version = "4.14.0"
 #      ; standard_library_default =
-#          "/Users/porridge/.opam/cs3110-2023sp/lib/ocaml"
-#      ; standard_library = "/Users/porridge/.opam/cs3110-2023sp/lib/ocaml"
+#          "/Users/owner/.opam/cs3110-2023sp/lib/ocaml"
+#      ; standard_library = "/Users/owner/.opam/cs3110-2023sp/lib/ocaml"
 #      ; standard_runtime = "the_standard_runtime_variable_was_deleted"
 #      ; ccomp_type = "cc"
 #      ; c_compiler = "cc"
@@ -81,7 +75,7 @@ $ /Users/porridge/.opam/cs3110-2023sp/bin/ocamlc.opt -config > /var/folders/8m/8
 #      ; native_c_libraries = [ "-lm" ]
 #      ; native_pack_linker = [ "ld"; "-r"; "-o" ]
 #      ; cc_profile = []
-#      ; architecture = "amd64"
+#      ; architecture = "arm64"
 #      ; model = "default"
 #      ; int_size = 63
 #      ; word_size = 64
@@ -97,8 +91,8 @@ $ /Users/porridge/.opam/cs3110-2023sp/bin/ocamlc.opt -config > /var/folders/8m/8
 #      ; os_type = "Unix"
 #      ; default_executable_name = "a.out"
 #      ; systhread_supported = true
-#      ; host = "x86_64-apple-darwin22.2.0"
-#      ; target = "x86_64-apple-darwin22.2.0"
+#      ; host = "aarch64-apple-darwin21.1.0"
+#      ; target = "aarch64-apple-darwin21.1.0"
 #      ; profiling = false
 #      ; flambda = false
 #      ; spacetime = false
