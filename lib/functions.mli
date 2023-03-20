@@ -17,4 +17,6 @@ val summary : event list -> string
 (** [summary lst] would print a string of all info in lst, each info separated
     by a comma *)
 
-(* val inputEvent: string *)
+(* val inputEvent: string -> string -> string list -> float -> event *)
+
+
