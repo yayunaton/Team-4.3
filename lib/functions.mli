@@ -46,8 +46,13 @@ val summary : event list -> string
     deleted or an empty event if it does not exist.  *)
 (* val delete_event: string -> event; *)
 
+(** debt_summary returns the current debt record of all participants 
+in the format of "who owes who how much money".*)
+(* val debt_summary: _ -> string *)
 
-
+(** name_search_debt takes in a person's name and outputs the debt 
+    record of that person (if the person exists) or an empty string. *)
+(* val name_search_debt: string -> string *)
 
 
 
