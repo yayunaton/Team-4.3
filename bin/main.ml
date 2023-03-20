@@ -19,8 +19,9 @@ let action first_input =
     print_endline "This functionality is to be implemented"
   else if List.hd first_input = "event" then
     print_endline "This functionality is to be implemented"
-(*else if List.hd first_input = "new event" then take_event else if List.hd
-  first_input = "help" then if List.length first_input = 1 then help_function ""
-  else help_function (List.nth first_input 1)*)
+    (*else if List.hd first_input = "new event" then take_event *)
+  else if List.hd first_input = "help" then
+    if List.length first_input = 1 then print_endline (help_function "")
+    else print_endline (help_function (List.nth first_input 1))
 
 let () = action first_input

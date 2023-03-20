@@ -17,9 +17,9 @@ val summary : event list -> string
 (** [summary lst] would print a string of all info in lst, each info separated
     by a comma *)
 
+val help_function : string -> string
 (** help_function takes a function name and return the spec of that function if
     it exists. *)
-(* val help_function : string -> string *)
 
 (** event_to_string takes in an event an outputs a string that contains all the
     information in this event. *)
