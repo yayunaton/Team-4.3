@@ -1,6 +1,6 @@
-type info = { a : string }
+type event = { a : string }
 
-let rec summary (b : info list) =
+let rec summary (b : event list) =
   match b with
   | [] -> "none"
   | [ h ] -> (

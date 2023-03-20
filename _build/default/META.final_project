@@ -1,6 +1,0 @@
-description = ""
-requires = "ANSITerminal"
-archive(byte) = "functions.cma"
-archive(native) = "functions.cmxa"
-plugin(byte) = "functions.cma"
-plugin(native) = "functions.cmxs"
