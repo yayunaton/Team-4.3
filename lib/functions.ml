@@ -35,28 +35,35 @@ let input_event a b c d =
 
 let help_function fun_name =
   if fun_name = "" then
-    " summary: would print a string of all records, each record separated by a \
-     comma event_to_string: takes in an event an outputs a string that \
-     contains all the information in this event \n\
+    "summary: \n\
+    \  would print a string of all records, each record separated by a comma \
+     event_to_string: takes in an event an outputs a string that contains all \
+     the information in this event \n\
     \ \n\
-    \ input_event: takes four parameters: name of the event (string); name of \
-     thepayer (string); event participants' names (string list); bill \
-     amount(float), and outputs the event that is created. \n\
+     input_event: \n\
+    \  takes four parameters: name of the event (string); name of thepayer \
+     (string); event participants' names (string list); bill amount(float), \
+     and outputs the event that is created. \n\
     \ \n\
-    \ print_all_event: outputs all the events that the user input before. \n\
-     name_search_event: takes the name (OR ID?? TBD) of the event and returns \
-     that event if it exists. If it doesn't exist, it will return an empty \
-     event \n\
+     print_all_event: \n\
+    \  outputs all the events that the user input before. \n\
     \ \n\
-    \ delete_event: takes the name (OR ID?? TBD) of the event and delete the \
-     corresponding event if it exists. It returns the event if it is deleted  \
-     or an empty event if it does not exist. \n\
+     name_search_event: \n\
+    \  takes the name (OR ID?? TBD) of the event and returns that event if it \
+     exists. If it doesn't exist, it will return an empty event \n\
     \ \n\
-    \ debt_summary: returns the current debt record of all participants in the \
-     format of [who owes who how much money]. \n\
+     delete_event: \n\
+    \  takes the name (OR ID?? TBD) of the event and delete the corresponding \
+     event if it exists. It returns the event if it is deleted  or an empty \
+     event if it does not exist. \n\
     \ \n\
-    \ name_search_debt: takes in a person's name and outputs the debt record \
-     of that person (if the person exists) or an empty string. "
+     debt_summary: \n\
+    \  returns the current debt record of all participants in the format of \
+     [who owes who how much money]. \n\
+    \ \n\
+     name_search_debt: \n\
+    \  takes in a person's name and outputs the debt record of that person (if \
+     the person exists) or an empty string. "
   else if fun_name = "summary" then
     "[summary would] print a string of all info in lst, each info separated by \
      a comma"
