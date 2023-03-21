@@ -8,20 +8,37 @@ open Functions
 
 let first_input = String.split_on_char ' ' (String.trim (input_line stdin))
 
-(*let take_event = let a = String.trim (input_line stdin) in let b = String.trim
-  (input_line stdin) in let c = String.split_on_char ' ' (String.trim
-  (input_line stdin)) in let d = int_of_string (input_line stdin) in input_event
-  a b c d*)
-
-let action first_input =
-  if first_input = [ "quit" ] then exit 0
+let rec action first_input =
+  (* Quit *)
+  if first_input = [ "quit" ] then exit 0 (* Finding user info *)
   else if List.hd first_input = "user" then
     print_endline "This functionality is to be implemented"
+    (* Finding evnet info *)
   else if List.hd first_input = "event" then
     print_endline "This functionality is to be implemented"
-    (*else if List.hd first_input = "new event" then take_event *)
+    (* Input new event *)
+  else if List.hd first_input = "newevent" then (
+    print_endline "Enter the name of the event: ";
+    let a = String.trim (input_line stdin) in
+    print_endline "Enter the name of the payer: ";
+    let b = String.trim (input_line stdin) in
+    print_endline "Enter the names of the participants, seperated by ',': ";
+    let c = String.split_on_char ',' (String.trim (input_line stdin)) in
+    print_endline "Enter the bill amount: ";
+    let d = float_of_string (String.trim (input_line stdin)) in
+    see_event (input_event a b c d)
+    (* Help *))
   else if List.hd first_input = "help" then
     if List.length first_input = 1 then print_endline (help_function "")
     else print_endline (help_function (List.nth first_input 1))
+  else
+    print_endline
+      "Unknown command. To quit the program enter 'quit'. Enter 'help' for \
+       more info.";
+  (* Repeat *)
+  let second_input =
+    String.split_on_char ' ' (String.trim (input_line stdin))
+  in
+  action second_input
 
 let () = action first_input

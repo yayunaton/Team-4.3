@@ -1,7 +1,8 @@
 type event = {
-  eventName : string;
-      (* payerName: string; participants: string list; billAmount: float; id:
-         int; *)
+  event_name : string;
+  payer_name : string;
+  participants : string list;
+  bill_amount : float; (*id : int;*)
 }
 (* type user = {a:string} *)
 
@@ -11,16 +12,26 @@ type event = {
   debt : (string * float) list;
 }*)
 
-let rec summary (b : event list) =
-  match b with
-  | [] -> "none"
-  | [ h ] -> (
-      match h with
-      | { eventName } -> eventName)
-  | h :: t ->
-      (match h with
-      | { eventName } -> eventName)
-      ^ summary t
+let see_event event =
+  print_endline "";
+  match event with
+  | { event_name; payer_name; participants; bill_amount } ->
+      print_endline "Event recorded.";
+      print_endline ("Name: " ^ event_name);
+      print_endline ("Payer: " ^ payer_name);
+      print_string "Participants: ";
+      List.iter (fun x -> print_string (x ^ ", ")) participants;
+      print_endline "";
+      print_endline ("Bill amount: " ^ string_of_float bill_amount)
+(*print_endline ("Event id: " ^ string_of_int id)*)
+
+let input_event a b c d =
+  { event_name = a; payer_name = b; participants = c; bill_amount = d }
+
+(*let rec summary (b : event list) = match b with | [] -> "none" | [ h ] -> (
+  match h with | { event_name; payer_name; participants; bill_amount (*;id*) }
+  -> event_name) | h :: t -> (match h with | { event_name; payer_name;
+  participants; bill_amount } -> event_name) ^ summary t *)
 
 let help_function fun_name =
   if fun_name = "" then
