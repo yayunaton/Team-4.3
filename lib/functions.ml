@@ -11,7 +11,7 @@ type event = {
   bill : event list;
   debt : (string * float) list;
 }*)
-(**hi*)
+
 let see_event event =
   print_endline "";
   match event with
