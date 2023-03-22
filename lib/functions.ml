@@ -36,60 +36,31 @@ let input_event a b c d =
 let help_function fun_name =
   if fun_name = "" then
     "summary: \n\
-    \  would print a string of all records, each record separated by a comma \
-     event_to_string: takes in an event an outputs a string that contains all \
-     the information in this event \n\
+    \  Look over past events. \n\
     \ \n\
-     input_event: \n\
-    \  takes four parameters: name of the event (string); name of thepayer \
-     (string); event participants' names (string list); bill amount(float), \
-     and outputs the event that is created. \n\
+     enter: \n\
+    \  Enter an event to record the event name, payer, paritcipents, and bill \
+     amount. \n\
     \ \n\
-     print_all_event: \n\
-    \  outputs all the events that the user input before. \n\
+     check: \n\
+    \  Check an event with its name or id. \n\
     \ \n\
-     name_search_event: \n\
-    \  takes the name (OR ID?? TBD) of the event and returns that event if it \
-     exists. If it doesn't exist, it will return an empty event \n\
+     delete: \n\
+    \  Delete an event with its name or id. \n\
     \ \n\
-     delete_event: \n\
-    \  takes the name (OR ID?? TBD) of the event and delete the corresponding \
-     event if it exists. It returns the event if it is deleted  or an empty \
-     event if it does not exist. \n\
+     debt: \n\
+    \  Look over debt record of all participants. \n\
     \ \n\
-     debt_summary: \n\
-    \  returns the current debt record of all participants in the format of \
-     [who owes who how much money]. \n\
-    \ \n\
-     name_search_debt: \n\
-    \  takes in a person's name and outputs the debt record of that person (if \
-     the person exists) or an empty string. "
-  else if fun_name = "summary" then
-    "[summary would] print a string of all info in lst, each info separated by \
-     a comma"
-  else if fun_name = "event_to_string" then
-    "[event_to_string] takes in an event an outputs a string that contains all \
-     the information in this event."
-  else if fun_name = "input_event" then
-    "[input_event] takes four parameters: name of the event (string); name of \
-     the payer (string); event participants' names (string list); bill amount \
-     (float), and outputs the event that is created."
-  else if fun_name = "print_all_event" then
-    "[print_all_event] outputs all the events that the user input before. "
-  else if fun_name = "name_search_event" then
-    "[name_search_event] takes the name (OR ID?? TBD) of the event and returns \
-     that event if it exists. If it doesn't exist, it will return an empty \
-     event (format TBD)."
-  else if fun_name = "delete_event" then
-    "[delete_event] takes the name (OR ID?? TBD) of the event and delete the \
-     corresponding event if it exists. It returns the event if it is deleted \
-     or an empty event if it does not exist."
-  else if fun_name = "debt_summary" then
-    "[debt_summary] returns the current debt record of all participants in the \
-     format of [who owes who how much money]"
-  else if fun_name = "name_search_debt" then
-    "[name_search_debt] takes in a person's name and outputs the debt record \
-     of that person (if the person exists) or an empty string."
+     mydebt: \n\
+    \  check someone's debt record."
+  else if fun_name = "summary" then "look over past events"
+  else if fun_name = "enter" then
+    "Enter an event to record the event name, payer, paritcipents, and bill \
+     amount."
+  else if fun_name = "check" then "Check an event with its name or id."
+  else if fun_name = "delete" then "Delete an event with its name or id."
+  else if fun_name = "debt" then "Look over debt record of all participants."
+  else if fun_name = "mydebt" then "check someone's debt record."
   else "you enter invalid input"
 
 (*let read_lines file process = let in_ch = open_in file in let rec read_line ()
