@@ -1,0 +1,33 @@
+---
+# Members of your group.
+group:
+  - name: Haoxuan Zou
+    netid: hz252
+  - name: James Liu
+    netid: zl293
+  - name: Rachel Jiang
+    netid: tj232
+  - name: Ian Chen
+    netid: yc823
+# Your PM.
+pm:
+  name: Shawn Chen
+  netid: sc2489
+# Set to false if you don't want your gallery entry to be public.
+publish: true
+# Pithy title
+title: "BillBook"
+# OK if this is a Cornell Github link, but public gallery viewers won't be able to see it.
+git-repo: "https://github.com/yayunaton/Team-4.3"
+# If you have no demo screencast, replace the url string with an empty string ""
+demo-video-url: ""
+# Write a short, attention-grabbing description of your project.
+desc: >
+  BillBook is a database for accounting management. It records transactions 
+  between group members and between a most-simplified debt relationship 
+  between members such that the time of transaction is minimized. 
+  For example, a group of people traveling together can note down payments 
+  such as booking a hotel, ordering a meal, and buying tickets in the system. 
+  The database stores these data and records transactions owed to one another. 
+  At the end of the activities, a group member can check his ownership to 
+  other members based on the data. 
