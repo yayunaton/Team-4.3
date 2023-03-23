@@ -10,14 +10,11 @@ let first_input = String.split_on_char ' ' (String.trim (input_line stdin))
 
 let rec action first_input =
   (* Quit *)
-  if first_input = [ "quit" ] then exit 0 (* Finding user info *)
-  else if List.hd first_input = "user" then
-    print_endline "This functionality is to be implemented"
-    (* Finding evnet info *)
-  else if List.hd first_input = "event" then
+  if first_input = [ "quit" ] then exit 0 (* Look over past events. *)
+  else if List.hd first_input = "summary" then
     print_endline "This functionality is to be implemented"
     (* Input new event *)
-  else if List.hd first_input = "newevent" then (
+  else if List.hd first_input = "record" then (
     print_endline "Enter the name of the event: ";
     let a = String.trim (input_line stdin) in
     print_endline "Enter the name of the payer: ";
@@ -27,7 +24,17 @@ let rec action first_input =
     print_endline "Enter the bill amount: ";
     let d = float_of_string (String.trim (input_line stdin)) in
     see_event (input_event a b c d)
-    (* Help *))
+    (* Help *)
+
+    (* Finding event info *))
+  else if List.hd first_input = "check" then
+    print_endline "This functionality is to be implemented"
+  else if List.hd first_input = "delete" then
+    print_endline "This functionality is to be implemented"
+  else if List.hd first_input = "debt" then
+    print_endline "This functionality is to be implemented"
+  else if List.hd first_input = "mydebt" then
+    print_endline "This functionality is to be implemented"
   else if List.hd first_input = "help" then
     if List.length first_input = 1 then print_endline (help_function "")
     else print_endline (help_function (List.nth first_input 1))
