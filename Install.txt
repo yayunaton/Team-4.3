@@ -1,0 +1,4 @@
+Mac : No additional installation needed
+Windows: Run with Ubuntu. No other installation needed.
+
+For both: Run with 'dune exec ./bin/main.exe'
