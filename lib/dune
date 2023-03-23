@@ -1,4 +1,3 @@
 (library
  (name functions)
- (public_name final_project)
- (libraries ANSITerminal))
+ (public_name final_project))
