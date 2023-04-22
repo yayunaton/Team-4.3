@@ -6,11 +6,11 @@ type event = {
 }
 (* type user = {a:string} *)
 
-(**type user = {
+type user = {
   name : string;
   bill : event list;
   debt : (string * float) list;
-}*)
+}
 let see_event event =
   print_endline "";
   match event with
@@ -23,7 +23,7 @@ let see_event event =
       print_endline "";
       print_endline ("Bill amount: " ^ string_of_float bill_amount)
 (*print_endline ("Event id: " ^ string_of_int id)*)
-
+(*https://github.com/Chris00/ocaml-csv*)
 let input_event a b c d =
   { event_name = a; payer_name = b; participants = c; bill_amount = d }
 
@@ -68,3 +68,5 @@ let help_function fun_name =
   read_line ()*)
 
 (*read_lines "trial.txt" print_endline*)
+
+let optimizer (e: event list) : user list= []
