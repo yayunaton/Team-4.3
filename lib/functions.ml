@@ -11,6 +11,7 @@ type user = {
   bill : event list;
   debt : (string * float) list;
 }
+
 let see_event event =
   print_endline "";
   match event with
@@ -69,4 +70,21 @@ let help_function fun_name =
 
 (*read_lines "trial.txt" print_endline*)
 
+(*Genearl Idea: Given a list of events, return a list of users
+  such that the debt list of each user is optimized
+  1. transform the list of events into users
+  2. sort the users in terms of debt 
+  3. reimburse the user that is owed the most with the user that owes the least,
+  and then with the user that owes the second least, etc. 
+   *)
 let optimizer (e: event list) : user list= []
+
+(*this function is supposed to transform a list of events into a list of users.
+   It's just more complicated than I thought.*)
+(* let events_to_users (e: event list) : user list = let users = [] in 
+  List.map (fun (e: event) -> 
+    match e with 
+    {event_name;payer_name = payer;participants = ps;bill_amount = b} ->
+    match (List.find_map (fun u1 -> if u1.name = payer then Some u1 else None) users)
+    with 
+    | Some u1 -> u1.bill) *)
