@@ -103,6 +103,11 @@ let rec create_record (e: event list) (debt_record: record list): record list =
     let new_record2 = (adjust_debt foc_record payer ps bill) in 
       create_record h new_record2
 
+let record_compare r1 r2 =
+  if r1.debt = r2.debt then 0 else if r1.debt > r2.debt then 1 else -1
+
+let record_lst_sort (r : record list) = List.sort record_compare r
+
 (*Genearl Idea: Given a list of events, return a list of users
   such that the debt list of each user is optimized
   1. transform the list of events into users
