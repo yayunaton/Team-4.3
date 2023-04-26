@@ -93,7 +93,7 @@ let rec create_record (e: event list) (debt_record: record list): record list =
 let rec adjust_debt (debt_record: record list) (payer: string) (part: string list) (bill: float)=
   match debt_record with 
   | [] -> debt_record
-  | {name=n; debt = d} :: h ->
+  | {name=n; debt = d} :: h -> 
 
 
 (*this function is supposed to transform a list of events into a list of users.
