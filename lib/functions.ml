@@ -138,7 +138,7 @@ let process_one_debter (reco: record) (recolist: record list) (original: record 
       let new_debt = (first_record.name, reco.debt) in 
       debt2 := new_debt :: !debt2; 
       first_record.debt <- first_record.debt +. reco.debt; 
-      current_debt := 0
+      current_debt := 0.
     else 
       let new_debt = (first_record.name, first_record.debt) in 
       debt2 := new_debt :: !debt2;
@@ -150,7 +150,7 @@ let process_one_debter (reco: record) (recolist: record list) (original: record 
 let rec process_rec_list (recolist: record list) (original: record list) : newuser list = 
   match recolist with 
   | [] -> []
-  | hd:: reco -> (process_one_debter reco recolist original) ::  process_rec_list hd original
+  | reco::hd -> (process_one_debter reco recolist original) ::  process_rec_list hd original
 
 (*Genearl Idea: Given a list of events, return a list of users
   such that the debt list of each user is optimized
@@ -165,8 +165,8 @@ let optimizer (e: event list) : newuser list=
   let record2 = create_record e debt_record in 
   (*STEP 2*)
   let sorted_record = record_lst_sort record2 in 
-  (*STEP 3*)
-  let result : newuser list= [] in process_rec_list sorted_record sorted_record
+  (*STEP 3. use list.rev because the sorting sequence is from least to most*)
+  let result : newuser list= [] in process_rec_list (List.rev sorted_record) sorted_record
 
 
 
