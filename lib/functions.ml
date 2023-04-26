@@ -73,6 +73,27 @@ let help_function fun_name =
 
 type record = {name:string; mutable debt:float}
 
+
+let find_or_create (debt_record : record list) (name: string) = 
+  if List.exists (fun re -> if re.name = name then true else false) debt_record = false then 
+    let new_record = {name=name; debt=0.}:: debt_record in new_record
+  else debt_record
+
+let rec foc_list (dr: record list) (nl: string list) = 
+  match nl with 
+  | [] -> dr
+  | name :: h -> let new_record = foc_list dr h in find_or_create new_record name
+
+let rec adjust_debt (debt_record: record list) (payer: string) (part: string list) (bill: float)=
+  match debt_record with 
+  | [] -> debt_record
+  | re :: h -> 
+    let _ = 
+      if re.name=payer then re.debt <- re.debt -. bill
+      else if List.mem re.name part 
+          then re.debt <- (re.debt +. bill /. float_of_int (List.length part))
+          else ()
+    in adjust_debt h payer part bill
 (*Genearl Idea: Given a list of events, return a list of users
   such that the debt list of each user is optimized
   1. transform the list of events into users
@@ -81,20 +102,16 @@ type record = {name:string; mutable debt:float}
   and then with the user that owes the second least, etc. 
    *)
 let optimizer (e: event list) : user list= 
-  let debt_record : record list = [] in 
+  let debt_record : record list = [] in []
 
 
 let rec create_record (e: event list) (debt_record: record list): record list = 
   match e with 
   | [] -> debt_record
-  | {event_name=_; payer_name = payer; participants=ps; bill_amount=bill}::h ->
-    (adjust_debt debt_record payer bill)
-    
-let rec adjust_debt (debt_record: record list) (payer: string) (part: string list) (bill: float)=
-  match debt_record with 
-  | [] -> debt_record
-  | {name=n; debt = d} :: h -> 
-
+  | {event_name=_; payer_name = payer; participants=ps; bill_amount=bill}::h -> 
+    let newps = payer :: ps in 
+    let foc_record = foc_list debt_record newps in
+    let new_record2 = (adjust_debt foc_record payer ps bill) in debt_record
 
 (*this function is supposed to transform a list of events into a list of users.
    It's just more complicated than I thought.*)
