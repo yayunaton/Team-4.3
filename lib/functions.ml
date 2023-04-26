@@ -10,6 +10,7 @@ type user = {
   name : string;
   bill : event list;
   debt : (string * float) list;
+  total_debt: float;
 }
 
 let see_event event =
@@ -70,6 +71,8 @@ let help_function fun_name =
 
 (*read_lines "trial.txt" print_endline*)
 
+type record = {name:string; mutable debt:float}
+
 (*Genearl Idea: Given a list of events, return a list of users
   such that the debt list of each user is optimized
   1. transform the list of events into users
@@ -77,7 +80,21 @@ let help_function fun_name =
   3. reimburse the user that is owed the most with the user that owes the least,
   and then with the user that owes the second least, etc. 
    *)
-let optimizer (e: event list) : user list= []
+let optimizer (e: event list) : user list= 
+  let debt_record : record list = [] in 
+
+
+let rec create_record (e: event list) (debt_record: record list): record list = 
+  match e with 
+  | [] -> debt_record
+  | {event_name=_; payer_name = payer; participants=ps; bill_amount=bill}::h ->
+    (adjust_debt debt_record payer bill)
+    
+let rec adjust_debt (debt_record: record list) (payer: string) (part: string list) (bill: float)=
+  match debt_record with 
+  | [] -> debt_record
+  | {name=n; debt = d} :: h ->
+
 
 (*this function is supposed to transform a list of events into a list of users.
    It's just more complicated than I thought.*)
