@@ -73,7 +73,6 @@ let help_function fun_name =
 
 type record = {name:string; mutable debt:float}
 
-
 let find_or_create (debt_record : record list) (name: string) = 
   if List.exists (fun re -> if re.name = name then true else false) debt_record = false then 
     let new_record = {name=name; debt=0.}:: debt_record in new_record
@@ -94,6 +93,16 @@ let rec adjust_debt (debt_record: record list) (payer: string) (part: string lis
           then re.debt <- (re.debt +. bill /. float_of_int (List.length part))
           else ()
     in adjust_debt h payer part bill
+
+let rec create_record (e: event list) (debt_record: record list): record list = 
+  match e with 
+  | [] -> debt_record
+  | {event_name=_; payer_name = payer; participants=ps; bill_amount=bill}::h -> 
+    let newps = payer :: ps in 
+    let foc_record = foc_list debt_record newps in
+    let new_record2 = (adjust_debt foc_record payer ps bill) in 
+      create_record h new_record2
+
 (*Genearl Idea: Given a list of events, return a list of users
   such that the debt list of each user is optimized
   1. transform the list of events into users
@@ -102,16 +111,11 @@ let rec adjust_debt (debt_record: record list) (payer: string) (part: string lis
   and then with the user that owes the second least, etc. 
    *)
 let optimizer (e: event list) : user list= 
-  let debt_record : record list = [] in []
+  let debt_record : record list = [] in 
+  let record2 = create_record e debt_record in 
 
 
-let rec create_record (e: event list) (debt_record: record list): record list = 
-  match e with 
-  | [] -> debt_record
-  | {event_name=_; payer_name = payer; participants=ps; bill_amount=bill}::h -> 
-    let newps = payer :: ps in 
-    let foc_record = foc_list debt_record newps in
-    let new_record2 = (adjust_debt foc_record payer ps bill) in debt_record
+
 
 (*this function is supposed to transform a list of events into a list of users.
    It's just more complicated than I thought.*)
