@@ -71,6 +71,8 @@ let help_function fun_name =
 
 (*read_lines "trial.txt" print_endline*)
 
+(*THE OPTIMIZER AREA BEGINS FROM HERE*)
+
 type record = {name:string; mutable debt:float}
 
 let find_or_create (debt_record : record list) (name: string) = 
@@ -108,6 +110,48 @@ let record_compare r1 r2 =
 
 let record_lst_sort (r : record list) = List.sort record_compare r
 
+type newuser = {
+  name: string;
+  debt: (string * float) list;
+  total_debt: float
+}
+
+let rec check_in_debt (reco: record) (original: record list) : float = 
+  match original with 
+  | [] -> 0. (*impossible*)
+  | {name=name; debt=debt} :: t -> if reco.name = name then debt else (check_in_debt reco t)
+
+let rec find_first (recolist: record list): int = 
+  match recolist with 
+  | [] -> 0
+  | {name; debt=debt} :: t -> if debt < 0. then 0 else 1 + find_first t
+
+let process_one_debter (reco: record) (recolist: record list) (original: record list): newuser = 
+  let this_debt = check_in_debt reco original in 
+  if this_debt <= 0. then {name=reco.name; debt=[]; total_debt=this_debt}
+  else let debt2 = ref [] in 
+  let current_debt = ref reco.debt in 
+  let _ = (while !current_debt > 0. do 
+    let first_index = find_first recolist in 
+    let first_record = (List.nth recolist first_index) in 
+    if first_record.debt +. reco.debt <= 0. then 
+      let new_debt = (first_record.name, reco.debt) in 
+      let debt2 := new_debt :: !debt2 in 
+      let first_record.debt <- first_record.debt +. reco.debt in 
+      current_debt := 0
+    else 
+      let new_debt = (first_record.name, first_record.debt) in 
+      let debt2 := new_debt :: !debt2 in 
+      let first_record.debt <- 0. in 
+      current_debt := first_record.debt +. reco.debt
+  done) in
+  {name=reco.name; debt=!debt2; total_debt = this_debt}
+
+let rec process_rec_list (recolist: record list) (original: record list) : newuser list = 
+  match recolist with 
+  | [] -> []
+  | hd:: reco -> (process_one_debter reco recolist original) ::  process_rec_list hd original
+
 (*Genearl Idea: Given a list of events, return a list of users
   such that the debt list of each user is optimized
   1. transform the list of events into users
@@ -115,9 +159,17 @@ let record_lst_sort (r : record list) = List.sort record_compare r
   3. reimburse the user that is owed the most with the user that owes the least,
   and then with the user that owes the second least, etc. 
    *)
-let optimizer (e: event list) : user list= 
+let optimizer (e: event list) : newuser list= 
   let debt_record : record list = [] in 
+  (*STEP 1*)
   let record2 = create_record e debt_record in 
+  (*STEP 2*)
+  let sorted_record = record_lst_sort record2 in 
+  (*STEP 3*)
+  let result : newuser list= [] in process_rec_list sorted_record sorted_record
+
+
+
 
 
 
