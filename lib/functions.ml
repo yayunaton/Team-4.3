@@ -136,16 +136,16 @@ let process_one_debter (reco: record) (recolist: record list) (original: record 
     let first_record = (List.nth recolist first_index) in 
     if first_record.debt +. reco.debt <= 0. then 
       let new_debt = (first_record.name, reco.debt) in 
-      let debt2 := new_debt :: !debt2 in 
-      let first_record.debt <- first_record.debt +. reco.debt in 
+      debt2 := new_debt :: !debt2; 
+      first_record.debt <- first_record.debt +. reco.debt; 
       current_debt := 0
     else 
       let new_debt = (first_record.name, first_record.debt) in 
-      let debt2 := new_debt :: !debt2 in 
-      let first_record.debt <- 0. in 
+      debt2 := new_debt :: !debt2;
+      first_record.debt <- 0.; 
       current_debt := first_record.debt +. reco.debt
   done) in
-  {name=reco.name; debt=!debt2; total_debt = this_debt}
+  {name=reco.name; debt= !debt2; total_debt = this_debt}
 
 let rec process_rec_list (recolist: record list) (original: record list) : newuser list = 
   match recolist with 
