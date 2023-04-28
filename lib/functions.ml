@@ -92,7 +92,7 @@ let write_csv filename data =
 let record_list_to_csv (r : record list) : Csv.t = List.map match_to_record r
 (*THE OPTIMIZER AREA BEGINS FROM HERE*)
 
-(* let find_or_create (debt_record : record list) (name : string) = if
+let find_or_create (debt_record : record list) (name : string) = if
    List.exists (fun re -> if re.name = name then true else false) debt_record =
    false then let new_record = { name; debt = 0. } :: debt_record in new_record
    else debt_record
@@ -145,20 +145,19 @@ let record_list_to_csv (r : record list) : Csv.t = List.map match_to_record r
    newuser list = match recolist with | [] -> [] | reco::hd ->
    (process_one_debter reco recolist original) :: process_rec_list hd original
 
-   (*Genearl Idea: Given a list of events, return a list of users such that the
-   debt list of each user is optimized 1. transform the list of events into
-   users 2. sort the users in terms of debt 3. reimburse the user that is owed
-   the most with the user that owes the least, and then with the user that owes
-   the second least, etc. *) let optimizer (e: event list) : newuser list= let
-   debt_record : record list = [] in (*STEP 1*) let record2 = create_record e
-   debt_record in (*STEP 2*) let sorted_record = record_lst_sort record2 in
-   (*STEP 3. use list.rev because the sorting sequence is from least to most*)
-   let result : newuser list= [] in process_rec_list (List.rev sorted_record)
-   sorted_record *)
+   (*Genearl Idea: Given a list of events, return a list of users
+     such that the debt list of each user is optimized
+     1. transform the list of events into users
+     2. sort the users in terms of debt 
+     3. reimburse the user that is owed the most with the user that owes the least,
+     and then with the user that owes the second least, etc. 
+      *)
+   let optimizer (e: event list) : newuser list= 
+     let debt_record : record list = [] in 
+     (*STEP 1*)
+     let record2 = create_record e debt_record in 
+     (*STEP 2*)
+     let sorted_record = record_lst_sort record2 in 
+     (*STEP 3. use list.rev because the sorting sequence is from least to most*)
+     process_rec_list (List.rev sorted_record) sorted_record
 
-(*this function is supposed to transform a list of events into a list of users.
-  It's just more complicated than I thought.*)
-(* let events_to_users (e: event list) : user list = let users = [] in List.map
-   (fun (e: event) -> match e with {event_name;payer_name = payer;participants =
-   ps;bill_amount = b} -> match (List.find_map (fun u1 -> if u1.name = payer
-   then Some u1 else None) users) with | Some u1 -> u1.bill) *)
