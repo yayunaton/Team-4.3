@@ -27,6 +27,7 @@ let rec debt_to_string (d : (string * float) list) : string =
 let user_to_string (u : user) : string =
   let { name = n; debt = d; total_debt = td } = u in
   "{" ^ n ^ "[" ^ debt_to_string d ^ "]" ^ string_of_float td ^ "USER_DONE"
+  ^ "}"
 
 let rec userlist_to_string (ul : user list) : string =
   match ul with
@@ -143,10 +144,14 @@ let rec adjust_debt (debt_record : record list) (payer : string)
   | [] -> debt_record
   | re :: h ->
       let _ =
-        if re.name = payer then re.debt <- re.debt -. bill
+        if re.name = payer then
+          re.debt <-
+            re.debt
+            -. (bill *. (1. -. (1. /. (float_of_int (List.length part) +. 1.))))
+          (*bill/c*)
         else if List.mem re.name part then
-          re.debt <- re.debt +. (bill /. float_of_int (List.length part))
-        else ()
+          re.debt <- re.debt +. (bill /. (float_of_int (List.length part) +. 1.))
+        else () (*IMPOSSIBLE?*)
       in
       adjust_debt h payer part bill
 
@@ -163,9 +168,10 @@ let rec create_record (e : event list) (debt_record : record list) : record list
     :: h ->
       let newps = payer :: ps in
       let foc_record = foc_list debt_record newps in
-      let new_record2 = adjust_debt foc_record payer ps bill in
-      print_endline (recordlist_to_string new_record2);
-      create_record h new_record2
+      print_endline "foc_record: ";
+      print_endline (recordlist_to_string foc_record);
+      let _ = adjust_debt foc_record payer ps bill in
+      create_record h foc_record
 
 let record_compare r1 r2 =
   if r1.debt = r2.debt then 0 else if r1.debt > r2.debt then 1 else -1
