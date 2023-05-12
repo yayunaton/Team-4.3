@@ -4,7 +4,6 @@ type event = {
   participants : string list;
   bill_amount : float; (*id : int;*)
 }
-(* type user = {a:string} *)
 
 (*type user = { name : string; bill : event list; debt : (string * float) list;
   total_debt : float; }*)
