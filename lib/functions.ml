@@ -8,6 +8,39 @@ type event = {
 
 (*type user = { name : string; bill : event list; debt : (string * float) list;
   total_debt : float; }*)
+type user = {
+  name : string;
+  debt : (string * float) list;
+  total_debt : float;
+}
+
+type record = {
+  name : string;
+  mutable debt : float;
+}
+
+let rec debt_to_string (d : (string * float) list) : string =
+  match d with
+  | [] -> ""
+  | (str, fl) :: t -> str ^ string_of_float fl ^ debt_to_string t
+
+let user_to_string (u : user) : string =
+  let { name = n; debt = d; total_debt = td } = u in
+  "{" ^ n ^ "[" ^ debt_to_string d ^ "]" ^ string_of_float td ^ "USER_DONE"
+
+let rec userlist_to_string (ul : user list) : string =
+  match ul with
+  | [] -> " DONE"
+  | u :: t -> user_to_string u ^ userlist_to_string t
+
+let record_to_string re =
+  let { name = n; debt = d } = re in
+  "{ " ^ n ^ " " ^ string_of_float d ^ " }"
+
+let rec recordlist_to_string rel =
+  match rel with
+  | [] -> "RecordList_DONE"
+  | re :: t -> record_to_string re ^ recordlist_to_string t
 
 let see_event event =
   print_endline "";
@@ -67,10 +100,6 @@ let help_function fun_name =
   read_line ()*)
 
 (*read_lines "trial.txt" print_endline*)
-type record = {
-  name : string;
-  mutable debt : float;
-}
 
 let match_record (r : string list) =
   match r with
@@ -135,18 +164,13 @@ let rec create_record (e : event list) (debt_record : record list) : record list
       let newps = payer :: ps in
       let foc_record = foc_list debt_record newps in
       let new_record2 = adjust_debt foc_record payer ps bill in
+      print_endline (recordlist_to_string new_record2);
       create_record h new_record2
 
 let record_compare r1 r2 =
   if r1.debt = r2.debt then 0 else if r1.debt > r2.debt then 1 else -1
 
 let record_lst_sort (r : record list) = List.sort record_compare r
-
-type newuser = {
-  name : string;
-  debt : (string * float) list;
-  total_debt : float;
-}
 
 let rec check_in_debt (reco : record) (original : record list) : float =
   match original with
@@ -157,10 +181,10 @@ let rec check_in_debt (reco : record) (original : record list) : float =
 let rec find_first (recolist : record list) : int =
   match recolist with
   | [] -> 0
-  | { name; debt } :: t -> if debt < 0. then 0 else 1 + find_first t
+  | { name = _; debt } :: t -> if debt < 0. then 0 else 1 + find_first t
 
 let process_one_debter (reco : record) (recolist : record list)
-    (original : record list) : newuser =
+    (original : record list) : user =
   let this_debt = check_in_debt reco original in
   if this_debt <= 0. then
     { name = reco.name; debt = []; total_debt = this_debt }
@@ -183,10 +207,12 @@ let process_one_debter (reco : record) (recolist : record list)
           current_debt := first_record.debt +. reco.debt
       done
     in
-    { name = reco.name; debt = !debt2; total_debt = this_debt }
+    let result = { name = reco.name; debt = !debt2; total_debt = this_debt } in
+    print_endline (user_to_string result);
+    result
 
 let rec process_rec_list (recolist : record list) (original : record list) :
-    newuser list =
+    user list =
   match recolist with
   | [] -> []
   | reco :: hd ->
@@ -197,11 +223,14 @@ let rec process_rec_list (recolist : record list) (original : record list) :
   2. sort the users in terms of debt 3. reimburse the user that is owed the most
   with the user that owes the least, and then with the user that owes the second
   least, etc. *)
-let optimizer (e : event list) : newuser list =
+let optimizer (e : event list) : user list =
   let debt_record : record list = [] in
   (*STEP 1*)
   let record2 = create_record e debt_record in
+  print_endline (recordlist_to_string record2);
   (*STEP 2*)
   let sorted_record = record_lst_sort record2 in
   (*STEP 3. use list.rev because the sorting sequence is from least to most*)
-  process_rec_list (List.rev sorted_record) sorted_record
+  let result = process_rec_list (List.rev sorted_record) sorted_record in
+  print_endline (userlist_to_string result);
+  result
