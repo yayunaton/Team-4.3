@@ -6,10 +6,10 @@ print_endline "For more information of functionalities, enter 'help'. "
 
 open Functions
 
-(*let data = csv_to_record_list (Csv.load "test.csv")*)
+let events = read_csv_file "test.csv"
 let first_input = String.split_on_char ' ' (String.trim (input_line stdin))
 
-let rec action first_input =
+let rec action first_input evts =
   (* Quit *)
   if first_input = [ "quit" ] then exit 0 (* Look over past events. *)
   else if List.hd first_input = "summary" then
@@ -24,9 +24,11 @@ let rec action first_input =
     let c = String.split_on_char ',' (String.trim (input_line stdin)) in
     print_endline "Enter the bill amount: ";
     let d = float_of_string (String.trim (input_line stdin)) in
-    see_event (input_event a b c d)
+    let evt = input_event a b c d in
+    let evt_lst = [ evt ] in
+    see_event evt;
+    write_csv_file "test.csv" (List.append evts evt_lst)
     (* Help *)
-
     (* Finding event info *))
   else if List.hd first_input = "check" then
     print_endline "This functionality is to be implemented"
@@ -47,6 +49,6 @@ let rec action first_input =
   let second_input =
     String.split_on_char ' ' (String.trim (input_line stdin))
   in
-  action second_input
+  action second_input evts
 
-let () = action first_input
+let () = action first_input events

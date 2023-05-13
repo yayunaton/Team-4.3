@@ -101,24 +101,34 @@ let help_function fun_name =
 
 (*read_lines "trial.txt" print_endline*)
 
-let match_record (r : string list) =
-  match r with
-  | [ a; b ] -> { name = a; debt = float_of_string b }
-  | _ -> failwith "invalid record"
+let parse_event (row : string list) : event =
+  match row with
+  | [ event_name; payer_name; participants_str; bill_amount_str ] ->
+      let participants = String.split_on_char '_' participants_str in
+      let bill_amount = float_of_string bill_amount_str in
+      { event_name; payer_name; participants; bill_amount }
+  | _ -> failwith "Unexpected row format"
 
-let csv_to_record_list (csv : Csv.t) = List.map match_record csv
+let event_to_row (event : event) : string list =
+  match event with
+  | { event_name; payer_name; participants; bill_amount } ->
+      [
+        event_name;
+        payer_name;
+        String.concat "_" participants;
+        string_of_float bill_amount;
+      ]
 
-let match_to_record (r : record) =
-  match r with
-  | { name; debt } -> [ name; string_of_float debt ]
+let read_csv_file (filename : string) : event list =
+  let rows : string list list = Csv.load filename in
+  List.map parse_event rows
 
-let write_csv filename data =
+let write_csv_file (filename : string) (events : event list) : unit =
   let oc = open_out filename in
-  let csv_out = Csv.to_channel oc in
-  Csv.output_all csv_out data;
+  let csv = Csv.to_channel oc in
+  let rows = List.map event_to_row events in
+  Csv.output_all csv rows;
   close_out oc
-
-let record_list_to_csv (r : record list) : Csv.t = List.map match_to_record r
 (*THE OPTIMIZER AREA BEGINS FROM HERE*)
 
 let find_or_create (debt_record : record list) (name : string) =
