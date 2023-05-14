@@ -27,7 +27,11 @@ let rec debt_to_string (d : (string * float) list) : string =
 let user_to_string (u : user) : string =
   let { name = n; debt = d; total_debt = td } = u in
   "{\n    name: " ^ n ^ ";\n    current debt: [" ^ debt_to_string d
-  ^ "];\n    entire debt: " ^ string_of_float td ^ "\n}" ^ "\n"
+  ^ "];\n    entire debt: " ^ string_of_float td
+  ^ "\n\
+    \    (a positive means this person is in debt; a negative means this \
+     person is a lender.)\n\
+     }" ^ "\n"
 
 let rec userlist_to_string_helper (ul : user list) : string =
   match ul with
