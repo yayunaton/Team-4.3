@@ -18,16 +18,22 @@ type record = {
   mutable debt : float;
 }
 
-let rec debt_to_string (d : (string * float) list) : string =
+let rec debt_to_string_helper (d : (string * float) list) : string =
   match d with
   | [] -> ""
   | (str, fl) :: t ->
-      "Owes " ^ str ^ " " ^ string_of_float fl ^ " dollars; " ^ debt_to_string t
+      "Owes " ^ str ^ " " ^ string_of_float fl ^ " dollars; "
+      ^ debt_to_string_helper t
+
+let debt_to_string d =
+  match d with
+  | [] -> "This person is out of debt!"
+  | _ -> "[" ^ debt_to_string_helper d ^ "];"
 
 let user_to_string (u : user) : string =
   let { name = n; debt = d; total_debt = td } = u in
-  "{\n    name: " ^ n ^ ";\n    current debt: [" ^ debt_to_string d
-  ^ "];\n    entire debt: " ^ string_of_float td
+  "{\n    name: " ^ n ^ ";\n    current debt: " ^ debt_to_string d
+  ^ "\n    entire debt: " ^ string_of_float td
   ^ "\n\
     \    (a positive means this person is in debt; a negative means this \
      person is a lender.)\n\
