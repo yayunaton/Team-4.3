@@ -5,8 +5,6 @@ type event = {
   bill_amount : float; (*id : int;*)
 }
 
-(*type user = { name : string; bill : event list; debt : (string * float) list;
-  total_debt : float; }*)
 type user = {
   name : string;
   debt : (string * float) list;
