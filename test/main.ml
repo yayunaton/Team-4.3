@@ -4,25 +4,25 @@ open Functions
 let test_event_1 : Functions.event =
   {
     event_name = "1";
-    payer_name = "x";
-    participants = [ "y"; "z" ];
+    payer_name = "Porridge";
+    participants = [ "Ian"; "Rachel" ];
     bill_amount = 3.0;
   }
 
 let test_event_2 : Functions.event =
   {
     event_name = "1";
-    payer_name = "a";
-    participants = [ "y"; "z" ];
+    payer_name = "James";
+    participants = [ "Ian"; "Rachel" ];
     bill_amount = 3.0;
   }
 
 let test_userlist_1 : user list =
   [
-    { name = "z"; debt = [ ("a", 2.0) ]; total_debt = 2.0 };
-    { name = "y"; debt = [ ("x", 2.0) ]; total_debt = 2.0 };
-    { name = "x"; debt = []; total_debt = -2.0 };
-    { name = "a"; debt = []; total_debt = -2.0 };
+    { name = "Rachel"; debt = [ ("James", 2.0) ]; total_debt = 2.0 };
+    { name = "Ian"; debt = [ ("Porridge", 2.0) ]; total_debt = 2.0 };
+    { name = "Porridge"; debt = []; total_debt = -2.0 };
+    { name = "James"; debt = []; total_debt = -2.0 };
   ]
 
 let test_eventlist_1 : event list = [ test_event_1; test_event_2 ]

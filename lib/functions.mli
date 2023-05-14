@@ -24,3 +24,4 @@ val write_csv_file : string -> event list -> unit
 val optimizer : event list -> user list
 val user_to_string : user -> string
 val userlist_to_string : user list -> string
+val recordlist_to_string : record list -> string

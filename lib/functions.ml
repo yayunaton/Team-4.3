@@ -21,17 +21,21 @@ type record = {
 let rec debt_to_string (d : (string * float) list) : string =
   match d with
   | [] -> ""
-  | (str, fl) :: t -> str ^ string_of_float fl ^ debt_to_string t
+  | (str, fl) :: t ->
+      "Owes " ^ str ^ " " ^ string_of_float fl ^ " dollars; " ^ debt_to_string t
 
 let user_to_string (u : user) : string =
   let { name = n; debt = d; total_debt = td } = u in
-  "{" ^ n ^ "[" ^ debt_to_string d ^ "]" ^ string_of_float td ^ "USER_DONE"
-  ^ "}"
+  "{\n    name: " ^ n ^ ";\n    current debt: [" ^ debt_to_string d
+  ^ "];\n    entire debt: " ^ string_of_float td ^ "\n}" ^ "\n"
 
-let rec userlist_to_string (ul : user list) : string =
+let rec userlist_to_string_helper (ul : user list) : string =
   match ul with
-  | [] -> " DONE"
-  | u :: t -> user_to_string u ^ userlist_to_string t
+  | [] -> ""
+  | u :: t -> user_to_string u ^ userlist_to_string_helper t
+
+let userlist_to_string (ul : user list) =
+  "\n" ^ userlist_to_string_helper ul ^ ""
 
 let record_to_string re =
   let { name = n; debt = d } = re in
@@ -177,8 +181,8 @@ let rec create_record (e : event list) (debt_record : record list) : record list
     :: h ->
       let newps = payer :: ps in
       let foc_record = foc_list debt_record newps in
-      print_endline "foc_record: ";
-      print_endline (recordlist_to_string foc_record);
+      (* print_endline "foc_record: "; print_endline (recordlist_to_string
+         foc_record); *)
       let _ = adjust_debt foc_record payer ps bill in
       create_record h foc_record
 
@@ -223,7 +227,7 @@ let process_one_debter (reco : record) (recolist : record list)
       done
     in
     let result = { name = reco.name; debt = !debt2; total_debt = this_debt } in
-    print_endline (user_to_string result);
+    (* print_endline (user_to_string result); *)
     result
 
 let rec process_rec_list (recolist : record list) (original : record list) :
@@ -242,7 +246,6 @@ let optimizer (e : event list) : user list =
   let debt_record : record list = [] in
   (*STEP 1*)
   let record2 = create_record e debt_record in
-  print_endline (recordlist_to_string record2);
   (*STEP 2*)
   let sorted_record = record_lst_sort record2 in
   (*STEP 3. use list.rev because the sorting sequence is from least to most*)
