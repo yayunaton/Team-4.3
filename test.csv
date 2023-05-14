@@ -1,4 +1,5 @@
+Event_1,Alice,Alice_Bob_Charlie,50.
 Event_2,Bob,Bob_Dave,30.
 Event_3,Charlie,Charlie_Eve,20.
 Test_Event,James,George_Rachel_Yayun,1000.
-sd,sd,sd,12.
+Test_2,George,James_George,500.
