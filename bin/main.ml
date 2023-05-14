@@ -1,5 +1,6 @@
 print_endline "";
 print_endline "Welcome to BillBook!";
+print_endline "To input an event, type in 'record'. ";
 print_endline "To acquire information of a user, type in 'user username'.";
 print_endline "To acquire information of an event, type in 'event event_id'.";
 print_endline "For more information of functionalities, enter 'help'. "

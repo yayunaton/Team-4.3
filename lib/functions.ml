@@ -246,10 +246,10 @@ let rec process_rec_list (recolist : record list) (original : record list) :
       process_one_debter reco recolist original :: process_rec_list hd original
 
 (*Genearl Idea: Given a list of events, return a list of users such that the
-  debt list of each user is optimized 1. transform the list of events into users
-  2. sort the users in terms of debt 3. reimburse the user that is owed the most
-  with the user that owes the least, and then with the user that owes the second
-  least, etc. *)
+  debt list of each user is optimized. 1. transform the list of events into
+  users 2. sort the users in terms of debt 3. reimburse the user that is owed
+  the most with the user that owes the least, and then with the user that owes
+  the second least, etc. *)
 let optimizer (e : event list) : user list =
   let debt_record : record list = [] in
   (*STEP 1*)
