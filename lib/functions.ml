@@ -149,8 +149,9 @@ let help_function fun_name =
 let parse_event (row : string list) : event =
   match row with
   | [ event_name; payer_name; participants_str; bill_amount_str ] ->
-      let participants = String.split_on_char '_' participants_str in
+      let par = String.split_on_char '_' participants_str in
       let bill_amount = float_of_string bill_amount_str in
+      let participants = if par = [ "" ] then [] else par in
       { event_name; payer_name; participants; bill_amount }
   | _ ->
       failwith "Unexpected row format"
@@ -161,7 +162,7 @@ let event_to_row (event : event) : string list =
   | { event_name; payer_name; participants; bill_amount } ->
       [ event_name
       ; payer_name
-      ; String.concat "_" participants
+      ; (if participants = [] then "" else String.concat "_" participants)
       ; string_of_float bill_amount
       ]
 

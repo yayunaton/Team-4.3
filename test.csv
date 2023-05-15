@@ -1,5 +1,5 @@
-Event_1,Alice,Alice_Bob_Charlie,50.
-Event_2,Bob,Bob_Dave,30.
-Event_3,Charlie,Charlie_Eve,20.
+Event_1,Alice,Bob_Charlie,50.
+Event_2,Bob,Dave,30.
+Event_3,Charlie,Eve,20.
 Test_Event,James,George_Rachel_Yayun,1000.
-Test,James,James,100.
+Test,James,,100.

@@ -499,8 +499,85 @@ let test_userlist_g1 : user list =
   ]
 
 
-let parse_test evt str =
+let event_comp (evt1 : Functions.event) (evt2 : Functions.event) =
+  match evt1 with
+  | { event_name; payer_name; participants; bill_amount } ->
+      let a = event_name in
+      let b = payer_name in
+      let c = participants in
+      let d = bill_amount in
+      ( match evt2 with
+      | { event_name; payer_name; participants; bill_amount } ->
+          a = event_name
+          && b = payer_name
+          && c = participants
+          && d = bill_amount )
+
+
+let parse_test str evt =
+  "test parse" >:: fun _ -> assert (event_comp (parse_event str) evt)
+
+
+let to_row_test str evt =
   "test parse" >:: fun _ -> assert_equal (event_to_row (parse_event evt)) str
+
+
+let parse_tests : test list =
+  [ parse_test
+      [ "Event_1"; "Alice"; "Bob_Charlie"; "50." ]
+      { event_name = "Event_1"
+      ; payer_name = "Alice"
+      ; participants = [ "Bob"; "Charlie" ]
+      ; bill_amount = 50.0
+      }
+  ; parse_test
+      [ "Event_2"; "Bob"; "Dave"; "50." ]
+      { event_name = "Event_2"
+      ; payer_name = "Bob"
+      ; participants = [ "Dave" ]
+      ; bill_amount = 50.0
+      }
+  ; parse_test
+      [ "Event_3"; "Charlie"; "Eve"; "50." ]
+      { event_name = "Event_3"
+      ; payer_name = "Charlie"
+      ; participants = [ "Eve" ]
+      ; bill_amount = 50.0
+      }
+  ; parse_test
+      [ "Event_4"; "James"; "George_Rachel_Yayun"; "50." ]
+      { event_name = "Event_4"
+      ; payer_name = "James"
+      ; participants = [ "George"; "Rachel"; "Yayun" ]
+      ; bill_amount = 50.0
+      }
+  ; parse_test
+      [ "Event_1"; "Alice"; ""; "50." ]
+      { event_name = "Event_1"
+      ; payer_name = "Alice"
+      ; participants = []
+      ; bill_amount = 50.0
+      }
+  ]
+
+
+let to_row_tests : test list =
+  [ to_row_test
+      [ "Event_1"; "Alice"; "Bob_Charlie"; "50." ]
+      [ "Event_1"; "Alice"; "Bob_Charlie"; "50." ]
+  ; to_row_test
+      [ "Event_2"; "Bob"; "Dave"; "30." ]
+      [ "Event_2"; "Bob"; "Dave"; "30." ]
+  ; to_row_test
+      [ "Event_1"; "Alice"; ""; "50." ]
+      [ "Event_1"; "Alice"; ""; "50." ]
+  ; to_row_test
+      [ "Event_1"; ""; "Bob_Charlie"; "50." ]
+      [ "Event_1"; ""; "Bob_Charlie"; "50." ]
+  ; to_row_test
+      [ ""; "Alice"; "Bob_Charlie"; "50." ]
+      [ ""; "Alice"; "Bob_Charlie"; "50." ]
+  ]
 
 
 let test1 =
@@ -651,6 +728,8 @@ let test =
        @ test12
        @ test13
        @ test14
+       @ to_row_tests
+       @ parse_tests
 
 
 let _ = run_test_tt_main test
