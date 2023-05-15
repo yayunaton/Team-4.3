@@ -41,3 +41,5 @@ val userlist_to_string : user list -> string
 val recordlist_to_string : record list -> string
 
 val create_record : event list -> record list -> record list
+
+val record_lst_sort : record list -> record list

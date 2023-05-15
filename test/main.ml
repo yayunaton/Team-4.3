@@ -712,6 +712,250 @@ let test14 =
   ]
 
 
+let test_createrecord_event1 =
+  { event_name = "empty"
+  ; payer_name = "Rachel"
+  ; participants = []
+  ; bill_amount = 4.0
+  }
+
+
+let test_createrecord_eventls1 = [ test_createrecord_event1 ]
+
+let test_createrecord_1 =
+  [ ( "test only one record"
+    >:: fun _ ->
+    assert_equal
+      (create_record test_createrecord_eventls1 [])
+      [ { name = "Rachel"; debt = 0.0 } ]
+      ~printer:recordlist_to_string )
+  ]
+
+
+let test_createrecord_event2 =
+  { event_name = "2"
+  ; payer_name = "Rachel"
+  ; participants = [ "Ian" ]
+  ; bill_amount = 4.0
+  }
+
+
+let test_createrecord_eventls2 = [ test_createrecord_event2 ]
+
+let test_createrecord_2 =
+  [ ( "test two records with one event"
+    >:: fun _ ->
+    assert_equal
+      (create_record test_createrecord_eventls2 [])
+      [ { name = "Rachel"; debt = -2.0 }; { name = "Ian"; debt = 2.0 } ]
+      ~printer:recordlist_to_string )
+  ]
+
+
+let test_createrecord_event3 =
+  { event_name = "2"
+  ; payer_name = "James"
+  ; participants = [ "Ian"; "George" ]
+  ; bill_amount = 6.0
+  }
+
+
+let test_createrecord_eventls3 = [ test_createrecord_event3 ]
+
+let test_createrecord_3 =
+  [ ( "test multiple records with one event"
+    >:: fun _ ->
+    assert_equal
+      (create_record test_createrecord_eventls3 [])
+      [ { name = "James"; debt = -4.0 }
+      ; { name = "Ian"; debt = 2.0 }
+      ; { name = "George"; debt = 2.0 }
+      ]
+      ~printer:recordlist_to_string )
+  ]
+
+
+let test_createrecord_event4 =
+  { event_name = "2"
+  ; payer_name = "George"
+  ; participants = [ "Solomon" ]
+  ; bill_amount = 6.0
+  }
+
+
+let test_createrecord_eventls4 = [ test_createrecord_event4 ]
+
+let test_createrecord_event4MORE =
+  { event_name = "2"
+  ; payer_name = "Ralph"
+  ; participants = [ "Kara" ]
+  ; bill_amount = 6.0
+  }
+
+
+let test_createrecord_4 =
+  [ ( "test if the original debt record is not empty, hence we need to add \
+       more while keep the original"
+    >:: fun _ ->
+    assert_equal
+      (create_record
+         test_createrecord_eventls4
+         (create_record [ test_createrecord_event4MORE ] []) )
+      [ { name = "George"; debt = -3.0 }
+      ; { name = "Solomon"; debt = 3.0 }
+      ; { name = "Ralph"; debt = -3.0 }
+      ; { name = "Kara"; debt = 3.0 }
+      ]
+      ~printer:recordlist_to_string )
+  ]
+
+
+let test_createrecord_event5 =
+  { event_name = "2"
+  ; payer_name = "George"
+  ; participants = [ "Ralph" ]
+  ; bill_amount = 6.0
+  }
+
+
+let test_createrecord_eventls5 = [ test_createrecord_event5 ]
+
+let test_createrecord_event5MORE =
+  { event_name = "2"
+  ; payer_name = "George"
+  ; participants = [ "Kara" ]
+  ; bill_amount = 6.0
+  }
+
+
+let test_createrecord_5 =
+  [ ( "test if the original debt record is not empty, hence we need to add \
+       more AND MAKE ADJUSTMENT while keep the original"
+    >:: fun _ ->
+    assert_equal
+      (create_record
+         test_createrecord_eventls5
+         (create_record [ test_createrecord_event5MORE ] []) )
+      [ { name = "Ralph"; debt = 3.0 }
+      ; { name = "George"; debt = -6.0 }
+      ; { name = "Kara"; debt = 3.0 }
+      ]
+      ~printer:recordlist_to_string )
+  ]
+
+
+let test_createrecord_event6_1 =
+  { event_name = "2"
+  ; payer_name = "George"
+  ; participants = [ "Conner" ]
+  ; bill_amount = 6.0
+  }
+
+
+let test_createrecord_event6_2 =
+  { event_name = "2"
+  ; payer_name = "Kara"
+  ; participants = [ "Conner" ]
+  ; bill_amount = 6.0
+  }
+
+
+let test_createrecord_eventls6 =
+  [ test_createrecord_event6_1; test_createrecord_event6_2 ]
+
+
+let test_createrecord_event6MORE_1 =
+  { event_name = "2"
+  ; payer_name = "Markus"
+  ; participants = [ "Kara" ]
+  ; bill_amount = 6.0
+  }
+
+
+let test_createrecord_event6MORE_2 =
+  { event_name = "2"
+  ; payer_name = "Markus"
+  ; participants = [ "Conner" ]
+  ; bill_amount = 6.0
+  }
+
+
+let test_createrecord_6 =
+  [ ( "test multiple events with all complications"
+    >:: fun _ ->
+    assert_equal
+      (create_record
+         test_createrecord_eventls6
+         (create_record
+            [ test_createrecord_event6MORE_1; test_createrecord_event6MORE_2 ]
+            [] ) )
+      [ { name = "George"; debt = -3.0 }
+      ; { name = "Conner"; debt = 9.0 }
+      ; { name = "Markus"; debt = -6.0 }
+      ; { name = "Kara"; debt = 0.0 }
+      ]
+      ~printer:recordlist_to_string )
+  ]
+
+
+let test_rcsort_rc1 = { name = "Steph"; debt = 0.0 }
+
+let test_rcsort_rcls1 = [ test_rcsort_rc1 ]
+
+let test_rcsort1 =
+  [ ( "test one case"
+    >:: fun _ ->
+    assert_equal
+      (record_lst_sort test_rcsort_rcls1)
+      [ { name = "Steph"; debt = 0.0 } ] )
+  ]
+
+
+let test_rcsort_rcls2 = []
+
+let test_rcsort2 =
+  [ ( "test empty"
+    >:: fun _ -> assert_equal (record_lst_sort test_rcsort_rcls2) [] )
+  ]
+
+
+let test_rcsort_rc3_1 = { name = "Angela"; debt = -1.0 }
+
+let test_rcsort_rc3_2 = { name = "JJ"; debt = 1.0 }
+
+let test_rcsort_rcls3 = [ test_rcsort_rc3_1; test_rcsort_rc3_2 ]
+
+let test_rcsort3 =
+  [ ( "test more cases, in order"
+    >:: fun _ ->
+    assert_equal
+      (record_lst_sort test_rcsort_rcls3)
+      [ { name = "Angela"; debt = -1.0 }; { name = "JJ"; debt = 1.0 } ] )
+  ]
+
+
+let test_rcsort_rc4_1 = { name = "Steph"; debt = -100.0 }
+
+let test_rcsort_rc4_2 = { name = "JJ"; debt = 100.0 }
+
+let test_rcsort_rc4_3 = { name = "Esther"; debt = 50.0 }
+
+let test_rcsort_rcls4 =
+  [ test_rcsort_rc4_2; test_rcsort_rc4_1; test_rcsort_rc4_3 ]
+
+
+let test_rcsort4 =
+  [ ( "test more cases, NOT in order"
+    >:: fun _ ->
+    assert_equal
+      (record_lst_sort test_rcsort_rcls4)
+      [ { name = "Steph"; debt = -100.0 }
+      ; { name = "Esther"; debt = 50.0 }
+      ; { name = "JJ"; debt = 100.0 }
+      ] )
+  ]
+
+
 let test =
   ""
   >::: test1
@@ -728,8 +972,18 @@ let test =
        @ test12
        @ test13
        @ test14
+       @ test_createrecord_1
+       @ test_createrecord_2
+       @ test_createrecord_3
+       @ test_createrecord_4
+       @ test_createrecord_5
+       @ test_createrecord_6
        @ to_row_tests
        @ parse_tests
+       @ test_rcsort1
+       @ test_rcsort2
+       @ test_rcsort3
+       @ test_rcsort4
 
 
 let _ = run_test_tt_main test
