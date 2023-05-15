@@ -3,7 +3,9 @@ print_endline "Welcome to BillBook!";
 print_endline "To input an event, type in 'record'. ";
 print_endline "To acquire information of a user, type in 'mydebt'.";
 print_endline "To acquire information of an event, type in 'check'.";
-print_endline "For more information of functionalities, enter 'help'. "
+print_endline
+  "For more functionalities or further info for these functions, enter 'help'. ";
+print_endline "To quit, type 'quit'."
 
 open Functions
 
@@ -54,7 +56,7 @@ let rec action first_input evts updt lst =
       print_endline "The event has been deleted."
   | "debt" :: _ ->
       if !updt = false then (
-        print_endline "Debts summaried as follows: ";
+        print_endline "Debts summarized as follows: ";
         updt := true;
         let user_list = optimizer evts in
         lst := user_list;
