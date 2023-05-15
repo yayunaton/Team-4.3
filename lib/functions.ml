@@ -136,7 +136,7 @@ let help_function fun_name =
   then "Look over debt record of all participants."
   else if fun_name = "mydebt"
   then "check someone's debt record."
-  else "you enter invalid input"
+  else "you entered invalid input."
 
 
 (*let read_lines file process = let in_ch = open_in file in let rec read_line ()
@@ -269,7 +269,10 @@ let process_one_debter
     (reco : record) (recolist : record list) (original : record list) : user =
   let this_debt = check_in_debt reco original in
   if this_debt <= 0.
-  then { name = reco.name; debt = []; total_debt = this_debt }
+  then
+    if this_debt *. this_debt <= 0.00000000001 (*WE NEED TO CLIP*)
+    then { name = reco.name; debt = []; total_debt = 0. }
+    else { name = reco.name; debt = []; total_debt = this_debt }
   else
     let debt2 = ref [] in
     let current_debt = ref reco.debt in
@@ -284,10 +287,15 @@ let process_one_debter
           let first_record = List.nth recolist first_index in
           if first_record.debt +. reco.debt <= 0.
           then (
-            let new_debt = (first_record.name, !current_debt) in
-            debt2 := new_debt :: !debt2 ;
-            first_record.debt <- first_record.debt +. !current_debt ;
-            current_debt := 0. )
+            if !current_debt < 0.0000000001
+            then current_debt := 0.
+            else
+              let new_debt = (first_record.name, !current_debt) in
+              debt2 := new_debt :: !debt2 ;
+              first_record.debt <- first_record.debt +. !current_debt ;
+              current_debt := 0. )
+          else if first_record.debt *. first_record.debt < 0.0000000001
+          then first_record.debt <- 0.
           else
             let new_debt = (first_record.name, -1. *. first_record.debt) in
             debt2 := new_debt :: !debt2 ;
@@ -295,9 +303,16 @@ let process_one_debter
             first_record.debt <- 0.
       done
     in
-    let result = { name = reco.name; debt = !debt2; total_debt = this_debt } in
-    (* print_endline (user_to_string result); *)
-    result
+    if this_debt *. this_debt <= 0.0000000001
+    then
+      let result = { name = reco.name; debt = !debt2; total_debt = 0. } in
+      result
+    else
+      let result =
+        { name = reco.name; debt = !debt2; total_debt = this_debt }
+      in
+      (* print_endline (user_to_string result); *)
+      result
 
 
 let rec process_rec_list (recolist : record list) (original : record list) :

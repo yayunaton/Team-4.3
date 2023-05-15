@@ -674,11 +674,12 @@ let str_tests =
 
 
 let test1 =
-  [ ( "test large case"
+  [ ( "test a LARGE AND COMPLICATED case. Can we optimize IT?"
     >:: fun _ ->
     assert_equal
       (userlist_to_string (optimizer test_eventlist_g1))
-      (userlist_to_string test_userlist_g1) )
+      (userlist_to_string test_userlist_g1)
+      ~printer:(fun str -> str) )
   ]
 
 
@@ -1085,6 +1086,165 @@ let test_input3 =
   ]
 
 
+let test_help_function_error =
+  [ ( "test that help function outputs error message"
+    >:: fun _ ->
+    assert_equal
+      (help_function "!&*(#&)#)$(*)🥳😫💩🤡ℬℏ⦿☞❡")
+      "you entered invalid input." )
+  ]
+
+
+(*A VERY LARGE CASE, but this time it resolves to zero.*)
+let testevent_g2_1 : event =
+  { event_name = "g2-1"
+  ; payer_name = "Kenny"
+  ; participants = [ "Alice"; "April" ]
+  ; bill_amount = 600.0
+  }
+
+
+let testevent_g2_2 : event =
+  { event_name = "g2-2"
+  ; payer_name = "Albert"
+  ; participants = [ "Kenny"; "Alice"; "Molly" ]
+  ; bill_amount = 800.0
+  }
+
+
+let testevent_g2_3 : event =
+  { event_name = "g2-3"
+  ; payer_name = "Fiona"
+  ; participants = [ "Alice" ]
+  ; bill_amount = 800.0
+  }
+
+
+let testevent_g2_4 : event =
+  { event_name = "g2-4"
+  ; payer_name = "Molly"
+  ; participants = [ "Albert"; "Alice" ]
+  ; bill_amount = 1200.0
+  }
+
+
+let testevent_g2_5 : event =
+  { event_name = "g2-5"
+  ; payer_name = "Justin"
+  ; participants = [ "Alice"; "Fiona" ]
+  ; bill_amount = 600.0
+  }
+
+
+let testevent_g2_6 : event =
+  { event_name = "g2-6"
+  ; payer_name = "Alice"
+  ; participants = [ "Molly" ]
+  ; bill_amount = 400.0
+  }
+
+
+let testevent_g2_7 : event =
+  { event_name = "g2-7"
+  ; payer_name = "April"
+  ; participants = [ "Alice"; "Stephen" ]
+  ; bill_amount = 600.0
+  }
+
+
+let testevent_g2_8 : event =
+  { event_name = "g2-8"
+  ; payer_name = "Stephen"
+  ; participants = [ "Justin"; "Alice" ]
+  ; bill_amount = 600.0
+  }
+
+
+let testevent_g2_9 : event =
+  { event_name = "g2-9, the event that compromised them all"
+  ; payer_name = "Alice"
+  ; participants =
+      [ "Molly"
+      ; "Kenny"
+      ; "April"
+      ; "Stephen"
+      ; "Justin"
+      ; "Fiona"
+      ; "Albert"
+      ; "George"
+      ; "Flora"
+      ]
+  ; bill_amount = 2000.0
+  }
+
+
+let testevent_g2_10 : event =
+  { event_name = "g2-10"
+  ; payer_name = "Flora"
+  ; participants = [ "George"; "Alice"; "Albert" ]
+  ; bill_amount = 1400.0
+  }
+
+
+let testevent_g2_11 : event =
+  { event_name = "g2-11"
+  ; payer_name = "Albert"
+  ; participants = [ "Flora" ]
+  ; bill_amount = 700.0
+  }
+
+
+let testevent_g2_12 : event =
+  { event_name = "g2-12"
+  ; payer_name = "Alice"
+  ; participants = [ "Molly" ]
+  ; bill_amount = 300.0
+  }
+
+
+let test_eventlist_LARGE1 =
+  [ testevent_g2_1
+  ; testevent_g2_2
+  ; testevent_g2_3
+  ; testevent_g2_4
+  ; testevent_g2_5
+  ; testevent_g2_6
+  ; testevent_g2_7
+  ; testevent_g2_8
+  ; testevent_g2_9
+  ; testevent_g2_10
+  ; testevent_g2_11
+  ; testevent_g2_12
+  ]
+
+
+let test_userlist_g2 : user list =
+  [ { name = "George"
+    ; debt = [ ("Flora", 500.0); ("Molly", 50.0) ]
+    ; total_debt = 550.0
+    }
+  ; { name = "Alice"; debt = []; total_debt = 0.0 }
+  ; { name = "Albert"; debt = []; total_debt = 0.0 }
+  ; { name = "Fiona"; debt = []; total_debt = 0.0 }
+  ; { name = "April"; debt = []; total_debt = 0.0 }
+  ; { name = "Kenny"; debt = []; total_debt = 0.0 }
+  ; { name = "Justin"; debt = []; total_debt = 0.0 }
+  ; { name = "Stephen"; debt = []; total_debt = 0.0 }
+  ; { name = "Molly"; debt = []; total_debt = -50.0 }
+  ; { name = "Flora"; debt = []; total_debt = -500.0 }
+  ]
+
+
+let test_LARGE1 =
+  [ ( "test a LARGE AND COMPLICATED case. Can we optimize IT?"
+    >:: fun _ ->
+    assert_equal
+      (userlist_to_string (optimizer test_eventlist_LARGE1))
+      (userlist_to_string test_userlist_g2)
+      ~printer:(fun str -> str) )
+  ]
+
+
 let test =
   ""
   >::: test1
@@ -1114,9 +1274,13 @@ let test =
        @ test_rcsort3
        @ test_rcsort4
        @ str_tests
+         (*THERE ARE 15 TEST CASES HERE. They are used to test all the to_string
+           functions.*)
        @ test_input1
        @ test_input2
        @ test_input3
+       @ test_help_function_error
+       @ test_LARGE1
 
 
 let _ = run_test_tt_main test
