@@ -25,6 +25,9 @@ let rec action first_input evts updt lst =
       print_endline "Enter the names of the participants, seperated by ',': ";
       let c = String.split_on_char ',' (String.trim (input_line stdin)) in
       print_endline "Enter the bill amount: ";
+      while float_of_string (String.trim (input_line stdin)) <= 0.0 do
+        print_endline "Please enter a positive number, enter the bill amount: "
+      done;
       let d = float_of_string (String.trim (input_line stdin)) in
       let evt = input_event a b c d in
       let evt_lst = [ evt ] in
