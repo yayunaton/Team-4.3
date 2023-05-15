@@ -519,7 +519,7 @@ let parse_test str evt =
 
 
 let to_row_test str evt =
-  "test parse" >:: fun _ -> assert_equal (event_to_row (parse_event evt)) str
+  "test to_row" >:: fun _ -> assert_equal (event_to_row (parse_event evt)) str
 
 
 let parse_tests : test list =
@@ -978,8 +978,8 @@ let test =
        @ test_createrecord_4
        @ test_createrecord_5
        @ test_createrecord_6
-       @ to_row_tests
-       @ parse_tests
+       @ to_row_tests (*THERE ARE 5 TEST CASES HERE*)
+       @ parse_tests (*THERE ARE 5 TEST CASES HERE*)
        @ test_rcsort1
        @ test_rcsort2
        @ test_rcsort3
