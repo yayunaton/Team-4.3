@@ -517,12 +517,108 @@ let test2 =
   ]
 
 
+let test3 =
+  [ ( "test 3"
+    >:: fun _ ->
+    assert_equal
+      (optimizer test_eventlist_10)
+      test_userlist_10
+      ~printer:userlist_to_string )
+  ]
+
+
 let test4 =
   [ ( "test repeat case"
     >:: fun _ ->
     assert_equal
       (userlist_to_string (optimizer test_eventlist_12))
       (userlist_to_string test_userlist_12) )
+  ]
+
+
+let test6 =
+  [ ( "test 6"
+    >:: fun _ ->
+    assert_equal
+      (optimizer test_eventlist_9)
+      test_userlist_9
+      ~printer:userlist_to_string )
+  ]
+
+
+let test7 =
+  [ ( "test 7"
+    >:: fun _ ->
+    assert_equal
+      (optimizer test_eventlist_8)
+      test_userlist_8
+      ~printer:userlist_to_string )
+  ]
+
+
+let test8 =
+  [ ( "test 8"
+    >:: fun _ ->
+    assert_equal
+      (optimizer test_eventlist_7)
+      test_userlist_7
+      ~printer:userlist_to_string )
+  ]
+
+
+let test9 =
+  [ ( "test 9"
+    >:: fun _ ->
+    assert_equal
+      (optimizer test_eventlist_6)
+      test_userlist_6
+      ~printer:userlist_to_string )
+  ]
+
+
+let test10 =
+  [ ( "test listDic.empty"
+    >:: fun _ ->
+    assert_equal
+      (optimizer test_eventlist_5)
+      test_userlist_5
+      ~printer:userlist_to_string )
+  ]
+
+
+let test11 =
+  [ ( "test 11"
+    >:: fun _ ->
+    assert_equal
+      (optimizer test_eventlist_4)
+      test_userlist_4
+      ~printer:userlist_to_string )
+  ]
+
+
+let test12 =
+  [ ( "test 12"
+    >:: fun _ ->
+    assert_equal
+      (optimizer test_eventlist_3)
+      test_userlist_3
+      ~printer:userlist_to_string )
+  ]
+
+
+let test13 =
+  [ ( "test 13"
+    >:: fun _ ->
+    assert_equal
+      (optimizer test_eventlist_2)
+      test_userlist_2
+      ~printer:userlist_to_string )
+  ]
+
+
+let test14 =
+  [ ( "test 14"
+    >:: fun _ -> assert_equal (optimizer test_eventlist_1) test_userlist_1 )
   ]
 
 
@@ -535,68 +631,22 @@ let test5 =
   ]
 
 
-let test3 =
+let test =
   ""
-  >::: List.append
-         (test1 @ test2 @ test4 @ test5)
-         [ ( "test listDic.empty"
-           >:: fun _ ->
-           assert_equal
-             (optimizer test_eventlist_10)
-             test_userlist_10
-             ~printer:userlist_to_string )
-         ; ( "test listDic.empty"
-           >:: fun _ ->
-           assert_equal
-             (optimizer test_eventlist_9)
-             test_userlist_9
-             ~printer:userlist_to_string )
-         ; ( "test listDic.empty"
-           >:: fun _ ->
-           assert_equal
-             (optimizer test_eventlist_8)
-             test_userlist_8
-             ~printer:userlist_to_string )
-         ; ( "test listDic.empty"
-           >:: fun _ ->
-           assert_equal
-             (optimizer test_eventlist_7)
-             test_userlist_7
-             ~printer:userlist_to_string )
-         ; ( "test listDic.empty"
-           >:: fun _ ->
-           assert_equal
-             (optimizer test_eventlist_6)
-             test_userlist_6
-             ~printer:userlist_to_string )
-         ; ( "test listDic.empty"
-           >:: fun _ ->
-           assert_equal
-             (optimizer test_eventlist_5)
-             test_userlist_5
-             ~printer:userlist_to_string )
-         ; ( "test listDic.empty"
-           >:: fun _ ->
-           assert_equal
-             (optimizer test_eventlist_4)
-             test_userlist_4
-             ~printer:userlist_to_string )
-         ; ( "test listDic.empty"
-           >:: fun _ ->
-           assert_equal
-             (optimizer test_eventlist_3)
-             test_userlist_3
-             ~printer:userlist_to_string )
-         ; ( "test listDic.empty"
-           >:: fun _ ->
-           assert_equal
-             (optimizer test_eventlist_2)
-             test_userlist_2
-             ~printer:userlist_to_string )
-         ; ( "test listDic.empty"
-           >:: fun _ ->
-           assert_equal (optimizer test_eventlist_1) test_userlist_1 )
-         ]
+  >::: test1
+       @ test2
+       @ test3
+       @ test4
+       @ test5
+       @ test6
+       @ test7
+       @ test8
+       @ test9
+       @ test10
+       @ test11
+       @ test12
+       @ test13
+       @ test14
 
 
-let _ = run_test_tt_main test3
+let _ = run_test_tt_main test
