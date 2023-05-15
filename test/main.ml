@@ -499,6 +499,10 @@ let test_userlist_g1 : user list =
   ]
 
 
+let parse_test evt str =
+  "test parse" >:: fun _ -> assert_equal (event_to_row (parse_event evt)) str
+
+
 let test1 =
   [ ( "test large case"
     >:: fun _ ->

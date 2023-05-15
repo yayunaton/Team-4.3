@@ -18,6 +18,10 @@ type user =
 
 val see_event : event -> unit
 
+val parse_event : string list -> event
+
+val event_to_row : event -> string list
+
 val input_event : string -> string -> string list -> float -> event
 
 val help_function : string -> string
