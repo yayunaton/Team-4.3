@@ -1,8 +1,8 @@
 print_endline "";
 print_endline "Welcome to BillBook!";
 print_endline "To input an event, type in 'record'. ";
-print_endline "To acquire information of a user, type in 'user username'.";
-print_endline "To acquire information of an event, type in 'event event_id'.";
+print_endline "To acquire information of a user, type in 'mydebt'.";
+print_endline "To acquire information of an event, type in 'check'.";
 print_endline "For more information of functionalities, enter 'help'. "
 
 open Functions
@@ -34,7 +34,9 @@ let rec action first_input evts =
       let matching_events =
         List.filter (fun evt -> evt.event_name = event_name) evts
       in
-      List.iter see_event matching_events
+      if List.length matching_events > 0 then
+        List.iter see_event matching_events
+      else print_endline "Event name not found."
   | "delete" :: _ ->
       print_endline "Enter the name of the event: ";
       let event_name = String.trim (input_line stdin) in
