@@ -46,8 +46,8 @@ let user_to_string (u : user) : string =
   ^ "\n    entire debt: "
   ^ string_of_float td
   ^ "\n\
-    \    (a positive means this person is in debt; a negative means this \
-     person is a lender.)\n\
+    \    (a positive means this person is in debt; a negative means \
+     this person is a lender.)\n\
      }"
   ^ "\n"
 
@@ -93,13 +93,18 @@ let see_event event =
 (*print_endline ("Event id: " ^ string_of_int id)*)
 (*https://github.com/Chris00/ocaml-csv*)
 let input_event a b c d =
-  { event_name = a; payer_name = b; participants = c; bill_amount = d }
+  { event_name = a
+  ; payer_name = b
+  ; participants = c
+  ; bill_amount = d
+  }
 
 
-(*let rec summary (b : event list) = match b with | [] -> "none" | [ h ] -> (
-  match h with | { event_name; payer_name; participants; bill_amount (*;id*) }
-  -> event_name) | h :: t -> (match h with | { event_name; payer_name;
-  participants; bill_amount } -> event_name) ^ summary t *)
+(*let rec summary (b : event list) = match b with | [] -> "none" | [ h
+  ] -> ( match h with | { event_name; payer_name; participants;
+  bill_amount (*;id*) } -> event_name) | h :: t -> (match h with | {
+  event_name; payer_name; participants; bill_amount } -> event_name) ^
+  summary t *)
 
 let help_function fun_name =
   if fun_name = ""
@@ -108,8 +113,8 @@ let help_function fun_name =
     \  Look over past events. \n\
     \ \n\
      record: \n\
-    \  Enter an event to record the event name, payer, paritcipents, and bill \
-     amount. \n\
+    \  Enter an event to record the event name, payer, paritcipents, \
+     and bill amount. \n\
     \ \n\
      check: \n\
     \  Check an event with its name or id. \n\
@@ -126,8 +131,8 @@ let help_function fun_name =
   then "look over past events"
   else if fun_name = "enter"
   then
-    "Enter an event to record the event name, payer, paritcipents, and bill \
-     amount."
+    "Enter an event to record the event name, payer, paritcipents, \
+     and bill amount."
   else if fun_name = "check"
   then "Check an event with its name or id."
   else if fun_name = "delete"
@@ -139,10 +144,10 @@ let help_function fun_name =
   else "you entered invalid input."
 
 
-(*let read_lines file process = let in_ch = open_in file in let rec read_line ()
-  = let line = try input_line in_ch with End_of_file -> exit 0 in (* process
-  line in this block, then read the next line *) process line; read_line () in
-  read_line ()*)
+(*let read_lines file process = let in_ch = open_in file in let rec
+  read_line () = let line = try input_line in_ch with End_of_file ->
+  exit 0 in (* process line in this block, then read the next line *)
+  process line; read_line () in read_line ()*)
 
 (*read_lines "trial.txt" print_endline*)
 
@@ -162,7 +167,9 @@ let event_to_row (event : event) : string list =
   | { event_name; payer_name; participants; bill_amount } ->
       [ event_name
       ; payer_name
-      ; (if participants = [] then "" else String.concat "_" participants)
+      ; ( if participants = []
+        then ""
+        else String.concat "_" participants )
       ; string_of_float bill_amount
       ]
 
@@ -183,7 +190,9 @@ let write_csv_file (filename : string) (events : event list) : unit =
 (*THE OPTIMIZER AREA BEGINS FROM HERE*)
 
 let find_or_create (debt_record : record list) (name : string) =
-  if List.exists (fun re -> if re.name = name then true else false) debt_record
+  if List.exists
+       (fun re -> if re.name = name then true else false)
+       debt_record
      = false
   then
     let new_record = { name; debt = 0. } :: debt_record in
@@ -214,18 +223,23 @@ let rec adjust_debt
         then
           re.debt <-
             re.debt
-            -. (bill *. (1. -. (1. /. (float_of_int (List.length part) +. 1.))))
+            -. bill
+               *. ( 1.
+                  -. (1. /. (float_of_int (List.length part) +. 1.))
+                  )
           (*bill/c*)
         else if List.mem re.name part
         then
-          re.debt <- re.debt +. (bill /. (float_of_int (List.length part) +. 1.))
+          re.debt <-
+            re.debt
+            +. (bill /. (float_of_int (List.length part) +. 1.))
         else () (*IMPOSSIBLE?*)
       in
       adjust_debt h payer part bill
 
 
-let rec create_record (e : event list) (debt_record : record list) : record list
-    =
+let rec create_record (e : event list) (debt_record : record list) :
+    record list =
   match e with
   | [] ->
       debt_record
@@ -237,8 +251,8 @@ let rec create_record (e : event list) (debt_record : record list) : record list
     :: h ->
       let newps = payer :: ps in
       let foc_record = foc_list debt_record newps in
-      (* print_endline "foc_record: "; print_endline (recordlist_to_string
-         foc_record); *)
+      (* print_endline "foc_record: "; print_endline
+         (recordlist_to_string foc_record); *)
       let _ = adjust_debt foc_record payer ps bill in
       create_record h foc_record
 
@@ -249,7 +263,8 @@ let record_compare r1 r2 =
 
 let record_lst_sort (r : record list) = List.sort record_compare r
 
-let rec check_in_debt (reco : record) (original : record list) : float =
+let rec check_in_debt (reco : record) (original : record list) : float
+    =
   match original with
   | [] ->
       0. (*impossible*)
@@ -266,7 +281,8 @@ let rec find_first (recolist : record list) : int =
 
 
 let process_one_debter
-    (reco : record) (recolist : record list) (original : record list) : user =
+    (reco : record) (recolist : record list) (original : record list)
+    : user =
   let this_debt = check_in_debt reco original in
   if this_debt <= 0.
   then
@@ -294,10 +310,13 @@ let process_one_debter
               debt2 := new_debt :: !debt2 ;
               first_record.debt <- first_record.debt +. !current_debt ;
               current_debt := 0. )
-          else if first_record.debt *. first_record.debt < 0.0000000001
+          else if first_record.debt *. first_record.debt
+                  < 0.0000000001
           then first_record.debt <- 0.
           else
-            let new_debt = (first_record.name, -1. *. first_record.debt) in
+            let new_debt =
+              (first_record.name, -1. *. first_record.debt)
+            in
             debt2 := new_debt :: !debt2 ;
             current_debt := first_record.debt +. !current_debt ;
             first_record.debt <- 0.
@@ -305,7 +324,9 @@ let process_one_debter
     in
     if this_debt *. this_debt <= 0.0000000001
     then
-      let result = { name = reco.name; debt = !debt2; total_debt = 0. } in
+      let result =
+        { name = reco.name; debt = !debt2; total_debt = 0. }
+      in
       result
     else
       let result =
@@ -315,28 +336,32 @@ let process_one_debter
       result
 
 
-let rec process_rec_list (recolist : record list) (original : record list) :
-    user list =
+let rec process_rec_list
+    (recolist : record list) (original : record list) : user list =
   match recolist with
   | [] ->
       []
   | reco :: hd ->
       (* print_endline ("thisprint" ^ record_to_string reco) ; *)
-      process_one_debter reco recolist original :: process_rec_list hd original
+      process_one_debter reco recolist original
+      :: process_rec_list hd original
 
 
-(*Genearl Idea: Given a list of events, return a list of users such that the
-  debt list of each user is optimized. 1. transform the list of events into
-  users 2. sort the users in terms of debt 3. reimburse the user that is owed
-  the most with the user that owes the least, and then with the user that owes
-  the second least, etc. *)
+(*Genearl Idea: Given a list of events, return a list of users such
+  that the debt list of each user is optimized. 1. transform the list
+  of events into users 2. sort the users in terms of debt 3. reimburse
+  the user that is owed the most with the user that owes the least,
+  and then with the user that owes the second least, etc. *)
 let optimizer (e : event list) : user list =
   let debt_record : record list = [] in
   (*STEP 1*)
   let record2 = create_record e debt_record in
   (*STEP 2*)
   let sorted_record = record_lst_sort record2 in
-  (*STEP 3. use list.rev because the sorting sequence is from least to most*)
-  let result = process_rec_list (List.rev sorted_record) sorted_record in
+  (*STEP 3. use list.rev because the sorting sequence is from least to
+    most*)
+  let result =
+    process_rec_list (List.rev sorted_record) sorted_record
+  in
   (* print_endline (userlist_to_string result) ; *)
   result

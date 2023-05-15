@@ -5,7 +5,8 @@ print_endline "To input an event, type in 'record'. " ;
 print_endline "To acquire information of a user, type in 'mydebt'." ;
 print_endline "To acquire information of an event, type in 'check'." ;
 print_endline
-  "For more functionalities or further info for these functions, enter 'help'. " ;
+  "For more functionalities or further info for these functions, \
+   enter 'help'. " ;
 print_endline "To quit, type 'quit'."
 
 open Functions
@@ -28,8 +29,11 @@ let rec action first_input evts updt lst =
       let a = String.trim (input_line stdin) in
       print_endline "Enter the name of the payer: " ;
       let b = String.trim (input_line stdin) in
-      print_endline "Enter the names of the participants, seperated by ',': " ;
-      let c = String.split_on_char ',' (String.trim (input_line stdin)) in
+      print_endline
+        "Enter the names of the participants, seperated by ',': " ;
+      let c =
+        String.split_on_char ',' (String.trim (input_line stdin))
+      in
       print_endline "Enter the bill amount: " ;
       let d = float_of_string (String.trim (input_line stdin)) in
       let evt = input_event a b c d in
@@ -75,7 +79,9 @@ let rec action first_input evts updt lst =
           !lst )
         else !lst
       in
-      let user = List.find_opt (fun user -> user.name = user_name) user_list in
+      let user =
+        List.find_opt (fun user -> user.name = user_name) user_list
+      in
       ( match user with
       | Some u ->
           print_endline (user_to_string u)
@@ -87,8 +93,8 @@ let rec action first_input evts updt lst =
       print_endline (help_function fun_name)
   | _ ->
       print_endline
-        "Unknown command. To quit the program enter 'quit'. Enter 'help' for \
-         more info." ;
+        "Unknown command. To quit the program enter 'quit'. Enter \
+         'help' for more info." ;
       let second_input =
         String.split_on_char ' ' (String.trim (input_line stdin))
       in
@@ -97,7 +103,9 @@ let rec action first_input evts updt lst =
 
 let () =
   let rec wait_for_command () =
-    let input = String.split_on_char ' ' (String.trim (input_line stdin)) in
+    let input =
+      String.split_on_char ' ' (String.trim (input_line stdin))
+    in
     action input events updated usrlst ;
     wait_for_command ()
   in

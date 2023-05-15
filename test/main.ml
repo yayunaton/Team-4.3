@@ -1,16 +1,17 @@
 open OUnit2
 open Functions
 
-(* Test Plan: The primary function of our "Billbook database" is to calculate
-   the optimized solution for group members to pay their bills. As a result, the
-   accuracy of our program is crucial. We plan to test the accuracy of our
-   algorithm by comparing the each case's result produced by the algorithm and
-   our result calculated by hand. To compare the results, we first wrote two
-   functions: event_list_to_string and user_list_to_string. This allows us to
-   use assert_equal on the results we have. Then, we start with the most simple
-   cases (empty, one event, etc.) and then gradually increase the difficulty.
-   Meanwhile, we insert specific tests in the middle to make sure corner cases
-   are handled correctly. *)
+(* Test Plan: The primary function of our "Billbook database" is to
+   calculate the optimized solution for group members to pay their
+   bills. As a result, the accuracy of our program is crucial. We plan
+   to test the accuracy of our algorithm by comparing the each case's
+   result produced by the algorithm and our result calculated by hand.
+   To compare the results, we first wrote two functions:
+   event_list_to_string and user_list_to_string. This allows us to use
+   assert_equal on the results we have. Then, we start with the most
+   simple cases (empty, one event, etc.) and then gradually increase
+   the difficulty. Meanwhile, we insert specific tests in the middle
+   to make sure corner cases are handled correctly. *)
 
 let test_event_1 : Functions.event =
   { event_name = "1"
@@ -220,7 +221,8 @@ let test_userlist_1 : user list =
   ]
 
 
-(*new participant, different debt amount for different people (test order)*)
+(*new participant, different debt amount for different people (test
+  order)*)
 let test_userlist_2 : user list =
   [ { name = "Ian"; debt = [ ("Rachel", 2.0) ]; total_debt = 2.0 }
   ; { name = "Xmen"; debt = [ ("Porridge", 1.0) ]; total_debt = 1.0 }
@@ -237,14 +239,20 @@ let test_userlist_3 : user list =
 
 let test_userlist_4 : user list =
   [ { name = "James"; debt = [ ("Ian", 10.0) ]; total_debt = 10.0 }
-  ; { name = "Rachel"; debt = [ ("Porridge", 5.0) ]; total_debt = 5.0 }
+  ; { name = "Rachel"
+    ; debt = [ ("Porridge", 5.0) ]
+    ; total_debt = 5.0
+    }
   ; { name = "Porridge"; debt = []; total_debt = -5.0 }
   ; { name = "Ian"; debt = []; total_debt = -10.0 }
   ]
 
 
 let test_userlist_5 : user list =
-  [ { name = "James"; debt = [ ("Porridge", 10.0) ]; total_debt = 10.0 }
+  [ { name = "James"
+    ; debt = [ ("Porridge", 10.0) ]
+    ; total_debt = 10.0
+    }
   ; { name = "Rachel"; debt = [ ("Ian", 10.0) ]; total_debt = 10.0 }
   ; { name = "Ian"; debt = []; total_debt = -10.0 }
   ; { name = "Porridge"; debt = []; total_debt = -10.0 }
@@ -483,7 +491,11 @@ let test_eventlist_g1 =
 let test_userlist_g1 : user list =
   [ { name = "Solomon"
     ; debt =
-        [ ("Bill", 52.5); ("Kaitlyn", 7.0); ("Joseph", 5.0); ("Albert", 2.5) ]
+        [ ("Bill", 52.5)
+        ; ("Kaitlyn", 7.0)
+        ; ("Joseph", 5.0)
+        ; ("Albert", 2.5)
+        ]
     ; total_debt = 67.0
     }
   ; { name = "James"
@@ -519,7 +531,8 @@ let parse_test str evt =
 
 
 let to_row_test str evt =
-  "test to_row" >:: fun _ -> assert_equal (event_to_row (parse_event evt)) str
+  "test to_row"
+  >:: fun _ -> assert_equal (event_to_row (parse_event evt)) str
 
 
 let parse_tests : test list =
@@ -581,7 +594,8 @@ let to_row_tests : test list =
 
 
 let test_dbt_str dbt str =
-  "test debt_to_string" >:: fun _ -> assert_equal (debt_to_string dbt) str
+  "test debt_to_string"
+  >:: fun _ -> assert_equal (debt_to_string dbt) str
 
 
 let test_usrlst lst str =
@@ -613,8 +627,8 @@ let str_tests =
       ^ "\n    entire debt: "
       ^ string_of_float 0.0
       ^ "\n\
-        \    (a positive means this person is in debt; a negative means this \
-         person is a lender.)\n\
+        \    (a positive means this person is in debt; a negative \
+         means this person is a lender.)\n\
          }"
       ^ "\n" )
   ; test_usrlst
@@ -627,12 +641,16 @@ let str_tests =
       ^ "\n    entire debt: "
       ^ string_of_float 20.0
       ^ "\n\
-        \    (a positive means this person is in debt; a negative means this \
-         person is a lender.)\n\
+        \    (a positive means this person is in debt; a negative \
+         means this person is a lender.)\n\
          }"
       ^ "\n" )
   ; test_usrlst
-      [ { name = ""; debt = [ ("B", 20.0); ("C", 20.0) ]; total_debt = 40.0 } ]
+      [ { name = ""
+        ; debt = [ ("B", 20.0); ("C", 20.0) ]
+        ; total_debt = 40.0
+        }
+      ]
       ( "\n"
       ^ "{\n    name: "
       ^ ""
@@ -641,8 +659,8 @@ let str_tests =
       ^ "\n    entire debt: "
       ^ string_of_float 40.0
       ^ "\n\
-        \    (a positive means this person is in debt; a negative means this \
-         person is a lender.)\n\
+        \    (a positive means this person is in debt; a negative \
+         means this person is a lender.)\n\
          }"
       ^ "\n" )
   ; test_usrlst
@@ -655,8 +673,8 @@ let str_tests =
       ^ "\n    entire debt: "
       ^ string_of_float (-40.0)
       ^ "\n\
-        \    (a positive means this person is in debt; a negative means this \
-         person is a lender.)\n\
+        \    (a positive means this person is in debt; a negative \
+         means this person is a lender.)\n\
          }"
       ^ "\n" )
   ; test_usrlst
@@ -816,7 +834,8 @@ let test13 =
 
 let test14 =
   [ ( "test 14"
-    >:: fun _ -> assert_equal (optimizer test_eventlist_1) test_userlist_1 )
+    >:: fun _ ->
+    assert_equal (optimizer test_eventlist_1) test_userlist_1 )
   ]
 
 
@@ -855,7 +874,9 @@ let test_createrecord_2 =
     >:: fun _ ->
     assert_equal
       (create_record test_createrecord_eventls2 [])
-      [ { name = "Rachel"; debt = -2.0 }; { name = "Ian"; debt = 2.0 } ]
+      [ { name = "Rachel"; debt = -2.0 }
+      ; { name = "Ian"; debt = 2.0 }
+      ]
       ~printer:recordlist_to_string )
   ]
 
@@ -902,8 +923,8 @@ let test_createrecord_event4MORE =
 
 
 let test_createrecord_4 =
-  [ ( "test if the original debt record is not empty, hence we need to add \
-       more while keep the original"
+  [ ( "test if the original debt record is not empty, hence we need \
+       to add more while keep the original"
     >:: fun _ ->
     assert_equal
       (create_record
@@ -937,8 +958,8 @@ let test_createrecord_event5MORE =
 
 
 let test_createrecord_5 =
-  [ ( "test if the original debt record is not empty, hence we need to add \
-       more AND MAKE ADJUSTMENT while keep the original"
+  [ ( "test if the original debt record is not empty, hence we need \
+       to add more AND MAKE ADJUSTMENT while keep the original"
     >:: fun _ ->
     assert_equal
       (create_record
@@ -995,7 +1016,9 @@ let test_createrecord_6 =
       (create_record
          test_createrecord_eventls6
          (create_record
-            [ test_createrecord_event6MORE_1; test_createrecord_event6MORE_2 ]
+            [ test_createrecord_event6MORE_1
+            ; test_createrecord_event6MORE_2
+            ]
             [] ) )
       [ { name = "George"; debt = -3.0 }
       ; { name = "Conner"; debt = 9.0 }
@@ -1023,7 +1046,8 @@ let test_rcsort_rcls2 = []
 
 let test_rcsort2 =
   [ ( "test empty"
-    >:: fun _ -> assert_equal (record_lst_sort test_rcsort_rcls2) [] )
+    >:: fun _ -> assert_equal (record_lst_sort test_rcsort_rcls2) []
+    )
   ]
 
 
@@ -1038,7 +1062,9 @@ let test_rcsort3 =
     >:: fun _ ->
     assert_equal
       (record_lst_sort test_rcsort_rcls3)
-      [ { name = "Angela"; debt = -1.0 }; { name = "JJ"; debt = 1.0 } ] )
+      [ { name = "Angela"; debt = -1.0 }
+      ; { name = "JJ"; debt = 1.0 }
+      ] )
   ]
 
 
@@ -1069,8 +1095,11 @@ let test_input1 =
     >:: fun _ ->
     assert_equal
       (input_event "" "" [] 0.0)
-      { event_name = ""; payer_name = ""; participants = []; bill_amount = 0.0 }
-    )
+      { event_name = ""
+      ; payer_name = ""
+      ; participants = []
+      ; bill_amount = 0.0
+      } )
   ]
 
 
@@ -1091,7 +1120,11 @@ let test_input3 =
   [ ( "test input event, weird strings"
     >:: fun _ ->
     assert_equal
-      (input_event "!&*(#&)#)$(*)🥳😫💩🤡ℬℏ⦿☞❡" "qwiepihav⁌௹Ã℠" [ "🖥️💟☮️" ] 1.0 )
+      (input_event
+         "!&*(#&)#)$(*)🥳😫💩🤡ℬℏ⦿☞❡"
+         "qwiepihav⁌௹Ã℠"
+         [ "🖥️💟☮️" ]
+         1.0 )
       { event_name = "!&*(#&)#)$(*)🥳😫💩🤡ℬℏ⦿☞❡"
       ; payer_name = "qwiepihav⁌௹Ã℠"
       ; participants = [ "🖥️💟☮️" ]
@@ -1288,8 +1321,8 @@ let test =
        @ test_rcsort3
        @ test_rcsort4
        @ str_tests
-         (*THERE ARE 15 TEST CASES HERE. They are used to test all the to_string
-           functions.*)
+         (*THERE ARE 15 TEST CASES HERE. They are used to test all the
+           to_string functions.*)
        @ test_input1
        @ test_input2
        @ test_input3
