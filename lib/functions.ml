@@ -273,20 +273,25 @@ let process_one_debter
     let debt2 = ref [] in
     let current_debt = ref reco.debt in
     let _ =
-      while !current_debt > 0. do
+      while !current_debt <> 0. do
         let first_index = find_first recolist in
-        let first_record = List.nth recolist first_index in
-        if first_record.debt +. reco.debt <= 0.
-        then (
-          let new_debt = (first_record.name, reco.debt) in
-          debt2 := new_debt :: !debt2 ;
-          first_record.debt <- first_record.debt +. reco.debt ;
-          current_debt := 0. )
+        (* print_endline (string_of_int first_index) ; print_endline
+           (recordlist_to_string recolist) ; *)
+        if first_index = List.length recolist
+        then current_debt := 0.
         else
-          let new_debt = (first_record.name, first_record.debt) in
-          debt2 := new_debt :: !debt2 ;
-          first_record.debt <- 0. ;
-          current_debt := first_record.debt +. reco.debt
+          let first_record = List.nth recolist first_index in
+          if first_record.debt +. reco.debt <= 0.
+          then (
+            let new_debt = (first_record.name, !current_debt) in
+            debt2 := new_debt :: !debt2 ;
+            first_record.debt <- first_record.debt +. !current_debt ;
+            current_debt := 0. )
+          else
+            let new_debt = (first_record.name, -1. *. first_record.debt) in
+            debt2 := new_debt :: !debt2 ;
+            current_debt := first_record.debt +. !current_debt ;
+            first_record.debt <- 0.
       done
     in
     let result = { name = reco.name; debt = !debt2; total_debt = this_debt } in
@@ -300,6 +305,7 @@ let rec process_rec_list (recolist : record list) (original : record list) :
   | [] ->
       []
   | reco :: hd ->
+      (* print_endline ("thisprint" ^ record_to_string reco) ; *)
       process_one_debter reco recolist original :: process_rec_list hd original
 
 
@@ -316,5 +322,5 @@ let optimizer (e : event list) : user list =
   let sorted_record = record_lst_sort record2 in
   (*STEP 3. use list.rev because the sorting sequence is from least to most*)
   let result = process_rec_list (List.rev sorted_record) sorted_record in
-  (*print_endline (userlist_to_string result) ;*)
+  (* print_endline (userlist_to_string result) ; *)
   result
