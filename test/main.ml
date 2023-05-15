@@ -1113,13 +1113,10 @@ let test =
        @ test_rcsort2
        @ test_rcsort3
        @ test_rcsort4
-<<<<<<< HEAD
        @ str_tests
-=======
        @ test_input1
        @ test_input2
        @ test_input3
->>>>>>> 3c5d4e756edb41362d6cc185f617c2d4cd378035
 
 
 let _ = run_test_tt_main test
