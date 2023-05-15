@@ -956,6 +956,42 @@ let test_rcsort4 =
   ]
 
 
+let test_input1 =
+  [ ( "test input event, all empty"
+    >:: fun _ ->
+    assert_equal
+      (input_event "" "" [] 0.0)
+      { event_name = ""; payer_name = ""; participants = []; bill_amount = 0.0 }
+    )
+  ]
+
+
+let test_input2 =
+  [ ( "test input event, all NOT empty"
+    >:: fun _ ->
+    assert_equal
+      (input_event "1" "2" [ "3" ] 1.0)
+      { event_name = "1"
+      ; payer_name = "2"
+      ; participants = [ "3" ]
+      ; bill_amount = 1.0
+      } )
+  ]
+
+
+let test_input3 =
+  [ ( "test input event, weird strings"
+    >:: fun _ ->
+    assert_equal
+      (input_event "!&*(#&)#)$(*)🥳😫💩🤡ℬℏ⦿☞❡" "qwiepihav⁌௹Ã℠" [ "🖥️💟☮️" ] 1.0 )
+      { event_name = "!&*(#&)#)$(*)🥳😫💩🤡ℬℏ⦿☞❡"
+      ; payer_name = "qwiepihav⁌௹Ã℠"
+      ; participants = [ "🖥️💟☮️" ]
+      ; bill_amount = 1.0
+      } )
+  ]
+
+
 let test =
   ""
   >::: test1
@@ -984,6 +1020,9 @@ let test =
        @ test_rcsort2
        @ test_rcsort3
        @ test_rcsort4
+       @ test_input1
+       @ test_input2
+       @ test_input3
 
 
 let _ = run_test_tt_main test
