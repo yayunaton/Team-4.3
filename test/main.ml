@@ -46,12 +46,18 @@ let test_eventlist_1 : event list = [ test_event_1; test_event_2 ]
 
 let test_eventlist_2 : event list = [ test_event_1; test_event_4 ]
 
+let test_2 =
+  "test listDic.empty"
+  >:: fun _ -> assert_equal (optimizer test_eventlist_2) test_userlist_2
+
+
 let tests =
   "brb test suite"
-  >::: [ ( "test listDic.empty"
-         >:: fun _ -> assert_equal (optimizer test_eventlist_1) test_userlist_1
-         )
-       ]
+  >::: test_2
+       :: [ ( "test listDic.empty"
+            >:: fun _ ->
+            assert_equal (optimizer test_eventlist_1) test_userlist_1 )
+          ]
 
 
 let _ = run_test_tt_main tests
