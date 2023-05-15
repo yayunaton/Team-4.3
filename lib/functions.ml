@@ -258,5 +258,5 @@ let optimizer (e : event list) : user list =
   let sorted_record = record_lst_sort record2 in
   (*STEP 3. use list.rev because the sorting sequence is from least to most*)
   let result = process_rec_list (List.rev sorted_record) sorted_record in
-  print_endline (userlist_to_string result);
+  (*print_endline (userlist_to_string result);*)
   result
