@@ -1,6 +1,17 @@
 open OUnit2
 open Functions
 
+(* Test Plan: The primary function of our "Billbook database" is to calculate
+   the optimized solution for group members to pay their bills. As a result, the
+   accuracy of our program is crucial. We plan to test the accuracy of our
+   algorithm by comparing the each case's result produced by the algorithm and
+   our result calculated by hand. To compare the results, we first wrote two
+   functions: event_list_to_string and user_list_to_string. This allows us to
+   use assert_equal on the results we have. Then, we start with the most simple
+   cases (empty, one event, etc.) and then gradually increase the difficulty.
+   Meanwhile, we insert specific tests in the middle to make sure corner cases
+   are handled correctly. *)
+
 let test_event_1 : Functions.event =
   { event_name = "1"
   ; payer_name = "Porridge"
@@ -81,6 +92,126 @@ let test_event_10 : Functions.event =
   }
 
 
+let test_event_11 : Functions.event =
+  { event_name = "big1"
+  ; payer_name = "A"
+  ; participants = []
+  ; bill_amount = 0.0
+  }
+
+
+let test_event_12 : Functions.event =
+  { event_name = "big3"
+  ; payer_name = "B"
+  ; participants = []
+  ; bill_amount = 0.0
+  }
+
+
+let test_event_13 : Functions.event =
+  { event_name = "big3"
+  ; payer_name = "C"
+  ; participants = []
+  ; bill_amount = 0.0
+  }
+
+
+let test_event_14 : Functions.event =
+  { event_name = "big4"
+  ; payer_name = "D"
+  ; participants = []
+  ; bill_amount = 0.0
+  }
+
+
+let test_event_15 : Functions.event =
+  { event_name = "big5"
+  ; payer_name = "B"
+  ; participants = []
+  ; bill_amount = 0.0
+  }
+
+
+let test_event_16 : Functions.event =
+  { event_name = "big6"
+  ; payer_name = "A"
+  ; participants = []
+  ; bill_amount = 0.0
+  }
+
+
+let test_event_17 : Functions.event =
+  { event_name = "big7"
+  ; payer_name = "A"
+  ; participants = []
+  ; bill_amount = 1.0
+  }
+
+
+let test_event_18 : Functions.event =
+  { event_name = "big3"
+  ; payer_name = "B"
+  ; participants = []
+  ; bill_amount = 2.0
+  }
+
+
+let test_event_19 : Functions.event =
+  { event_name = "big3"
+  ; payer_name = "C"
+  ; participants = []
+  ; bill_amount = 3.0
+  }
+
+
+let test_event_20 : Functions.event =
+  { event_name = "big4"
+  ; payer_name = "D"
+  ; participants = []
+  ; bill_amount = 4.0
+  }
+
+
+let test_event_21 : Functions.event =
+  { event_name = "big5"
+  ; payer_name = "B"
+  ; participants = []
+  ; bill_amount = 2.0
+  }
+
+
+let test_event_22 : Functions.event =
+  { event_name = "big6"
+  ; payer_name = "A"
+  ; participants = []
+  ; bill_amount = 3.0
+  }
+
+
+let test_event_23 : Functions.event =
+  { event_name = "A to B"
+  ; payer_name = "B"
+  ; participants = [ "A" ]
+  ; bill_amount = 20.0
+  }
+
+
+let test_event_24 : Functions.event =
+  { event_name = "B to C"
+  ; payer_name = "C"
+  ; participants = [ "B" ]
+  ; bill_amount = 20.0
+  }
+
+
+let test_event_25 : Functions.event =
+  { event_name = "C to A"
+  ; payer_name = "A"
+  ; participants = [ "C" ]
+  ; bill_amount = 20.0
+  }
+
+
 let test_userlist_1 : user list =
   [ { name = "Rachel"; debt = [ ("James", 2.0) ]; total_debt = 2.0 }
   ; { name = "Ian"; debt = [ ("Porridge", 2.0) ]; total_debt = 2.0 }
@@ -142,6 +273,29 @@ let test_userlist_10 : user list =
   [ { name = "Rachel"; debt = []; total_debt = 0.0 } ]
 
 
+let test_userlist_11 : user list =
+  [ { name = "A"; debt = []; total_debt = 0.0 }
+  ; { name = "B"; debt = []; total_debt = 0.0 }
+  ; { name = "C"; debt = []; total_debt = 0.0 }
+  ; { name = "D"; debt = []; total_debt = 0.0 }
+  ]
+
+
+let test_userlist_12 : user list =
+  [ { name = "A"; debt = []; total_debt = 0.0 }
+  ; { name = "B"; debt = []; total_debt = 0.0 }
+  ; { name = "C"; debt = []; total_debt = 0.0 }
+  ; { name = "D"; debt = []; total_debt = 0.0 }
+  ]
+
+
+let test_userlist_13 : user list =
+  [ { name = "A"; debt = []; total_debt = 0.0 }
+  ; { name = "B"; debt = []; total_debt = 0.0 }
+  ; { name = "C"; debt = []; total_debt = 0.0 }
+  ]
+
+
 let test_eventlist_1 : event list = [ test_event_1; test_event_2 ]
 
 let test_eventlist_2 : event list = [ test_event_1; test_event_4 ]
@@ -161,6 +315,30 @@ let test_eventlist_8 : event list = [ test_event_8 ]
 let test_eventlist_9 : event list = [ test_event_9 ]
 
 let test_eventlist_10 : event list = [ test_event_10 ]
+
+let test_eventlist_11 : event list =
+  [ test_event_11
+  ; test_event_12
+  ; test_event_13
+  ; test_event_14
+  ; test_event_15
+  ; test_event_16
+  ]
+
+
+let test_eventlist_12 : event list =
+  [ test_event_17
+  ; test_event_18
+  ; test_event_19
+  ; test_event_20
+  ; test_event_21
+  ; test_event_22
+  ]
+
+
+let test_eventlist_13 : event list =
+  [ test_event_23; test_event_24; test_event_25 ]
+
 
 (*A complicated debt relationship.*)
 let testevent_g1_1 : event =
@@ -331,9 +509,36 @@ let test1 =
 
 
 let test2 =
+  [ ( "test repeat case"
+    >:: fun _ ->
+    assert_equal
+      (userlist_to_string (optimizer test_eventlist_11))
+      (userlist_to_string test_userlist_11) )
+  ]
+
+
+let test4 =
+  [ ( "test repeat case"
+    >:: fun _ ->
+    assert_equal
+      (userlist_to_string (optimizer test_eventlist_12))
+      (userlist_to_string test_userlist_12) )
+  ]
+
+
+let test5 =
+  [ ( "test auto case"
+    >:: fun _ ->
+    assert_equal
+      (userlist_to_string (optimizer test_eventlist_13))
+      (userlist_to_string test_userlist_13) )
+  ]
+
+
+let test3 =
   ""
   >::: List.append
-         test1
+         (test1 @ test2 @ test4 @ test5)
          [ ( "test listDic.empty"
            >:: fun _ ->
            assert_equal
@@ -394,4 +599,4 @@ let test2 =
          ]
 
 
-let _ = run_test_tt_main test2
+let _ = run_test_tt_main test3
