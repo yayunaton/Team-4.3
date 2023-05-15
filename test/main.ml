@@ -687,8 +687,8 @@ let str_tests =
       ^ "\n    entire debt: "
       ^ string_of_float 0.0
       ^ "\n\
-        \    (a positive means this person is in debt; a negative means this \
-         person is a lender.)\n\
+        \    (a positive means this person is in debt; a negative \
+         means this person is a lender.)\n\
          }"
       ^ "\n" )
   ; test_record [] ""
@@ -1265,7 +1265,7 @@ let test_eventlist_LARGE1 =
   ]
 
 
-let test_userlist_g2 : user list =
+let test_userlist_LARGE1 : user list =
   [ { name = "George"
     ; debt = [ ("Flora", 500.0); ("Molly", 50.0) ]
     ; total_debt = 550.0
@@ -1287,7 +1287,7 @@ let test_LARGE1 =
     >:: fun _ ->
     assert_equal
       (userlist_to_string (optimizer test_eventlist_LARGE1))
-      (userlist_to_string test_userlist_g2)
+      (userlist_to_string test_userlist_LARGE1)
       ~printer:(fun str -> str) )
   ]
 
