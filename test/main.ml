@@ -511,6 +511,77 @@ let test_userlist_g1 : user list =
   ]
 
 
+let testevent_g2_1 : event =
+  { event_name = "g2-1"
+  ; payer_name = "A"
+  ; participants = [ "B"; "C"; "D" ]
+  ; bill_amount = 100.0
+  }
+
+
+let testevent_g2_2 : event =
+  { event_name = "g2-2"
+  ; payer_name = "B"
+  ; participants = [ "C"; "D"; "E"; "F" ]
+  ; bill_amount = 500.0
+  }
+
+
+let testevent_g2_3 : event =
+  { event_name = "g2-3"
+  ; payer_name = "B"
+  ; participants = [ "A"; "C"; "D" ]
+  ; bill_amount = 400.0
+  }
+
+
+let testevent_g2_4 : event =
+  { event_name = "g2-4"
+  ; payer_name = "C"
+  ; participants = [ "A"; "D" ]
+  ; bill_amount = 900.0
+  }
+
+
+let testevent_g2_5 : event =
+  { event_name = "g2-5"
+  ; payer_name = "E"
+  ; participants = [ "A"; "D" ]
+  ; bill_amount = 300.0
+  }
+
+
+let testevent_g2_6 : event =
+  { event_name = "g2-6"
+  ; payer_name = "D"
+  ; participants = [ "B"; "E" ]
+  ; bill_amount = 300.0
+  }
+
+
+let test_eventlist_g2 =
+  [ testevent_g2_1
+  ; testevent_g2_2
+  ; testevent_g2_3
+  ; testevent_g2_4
+  ; testevent_g2_5
+  ; testevent_g2_6
+  ]
+
+
+let test_userlist_g2 : user list =
+  [ { name = "A"; debt = [ ("B", 425.0) ]; total_debt = 425.0 }
+  ; { name = "B"; debt = []; total_debt = -575.0 }
+  ; { name = "C"; debt = []; total_debt = -375.0 }
+  ; { name = "D"
+    ; debt = [ ("B", 50.0); ("C", 375.0) ]
+    ; total_debt = 425.0
+    }
+  ; { name = "E"; debt = []; total_debt = 0.0 }
+  ; { name = "F"; debt = [ ("B", 100.0) ]; total_debt = 100.0 }
+  ]
+
+
 let event_comp (evt1 : Functions.event) (evt2 : Functions.event) =
   match evt1 with
   | { event_name; payer_name; participants; bill_amount } ->
@@ -687,8 +758,8 @@ let str_tests =
       ^ "\n    entire debt: "
       ^ string_of_float 0.0
       ^ "\n\
-        \    (a positive means this person is in debt; a negative means this \
-         person is a lender.)\n\
+        \    (a positive means this person is in debt; a negative \
+         means this person is a lender.)\n\
          }"
       ^ "\n" )
   ; test_record [] ""
@@ -711,6 +782,16 @@ let test1 =
     assert_equal
       (userlist_to_string (optimizer test_eventlist_g1))
       (userlist_to_string test_userlist_g1)
+      ~printer:(fun str -> str) )
+  ]
+
+
+let testg2 =
+  [ ( "test a LARGE AND COMPLICATED case. Can we optimize IT?"
+    >:: fun _ ->
+    assert_equal
+      (userlist_to_string (optimizer test_eventlist_g2))
+      (userlist_to_string test_userlist_g2)
       ~printer:(fun str -> str) )
   ]
 
@@ -1328,6 +1409,7 @@ let test =
        @ test_input3
        @ test_help_function_error
        @ test_LARGE1
+       @ testg2
 
 
 let _ = run_test_tt_main test
