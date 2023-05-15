@@ -659,6 +659,20 @@ let str_tests =
          person is a lender.)\n\
          }"
       ^ "\n" )
+  ; test_usrlst
+      [ { name = ""; debt = []; total_debt = 0.0 } ]
+      ( "\n"
+      ^ "{\n    name: "
+      ^ ""
+      ^ ";\n    current debt: "
+      ^ debt_to_string []
+      ^ "\n    entire debt: "
+      ^ string_of_float 0.0
+      ^ "\n\
+        \    (a positive means this person is in debt; a negative means this \
+         person is a lender.)\n\
+         }"
+      ^ "\n" )
   ; test_record [] ""
   ; test_record [ { name = "A"; debt = 0.0 } ] "{ A 0. }"
   ; test_record
