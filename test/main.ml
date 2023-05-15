@@ -1049,6 +1049,42 @@ let test_rcsort4 =
   ]
 
 
+let test_input1 =
+  [ ( "test input event, all empty"
+    >:: fun _ ->
+    assert_equal
+      (input_event "" "" [] 0.0)
+      { event_name = ""; payer_name = ""; participants = []; bill_amount = 0.0 }
+    )
+  ]
+
+
+let test_input2 =
+  [ ( "test input event, all NOT empty"
+    >:: fun _ ->
+    assert_equal
+      (input_event "1" "2" [ "3" ] 1.0)
+      { event_name = "1"
+      ; payer_name = "2"
+      ; participants = [ "3" ]
+      ; bill_amount = 1.0
+      } )
+  ]
+
+
+let test_input3 =
+  [ ( "test input event, weird strings"
+    >:: fun _ ->
+    assert_equal
+      (input_event "!&*(#&)#)$(*)🥳😫💩🤡ℬℏ⦿☞❡" "qwiepihav⁌௹Ã℠" [ "🖥️💟☮️" ] 1.0 )
+      { event_name = "!&*(#&)#)$(*)🥳😫💩🤡ℬℏ⦿☞❡"
+      ; payer_name = "qwiepihav⁌௹Ã℠"
+      ; participants = [ "🖥️💟☮️" ]
+      ; bill_amount = 1.0
+      } )
+  ]
+
+
 let test =
   ""
   >::: test1
@@ -1071,13 +1107,19 @@ let test =
        @ test_createrecord_4
        @ test_createrecord_5
        @ test_createrecord_6
-       @ to_row_tests
-       @ parse_tests
+       @ to_row_tests (*THERE ARE 5 TEST CASES HERE*)
+       @ parse_tests (*THERE ARE 5 TEST CASES HERE*)
        @ test_rcsort1
        @ test_rcsort2
        @ test_rcsort3
        @ test_rcsort4
+<<<<<<< HEAD
        @ str_tests
+=======
+       @ test_input1
+       @ test_input2
+       @ test_input3
+>>>>>>> 3c5d4e756edb41362d6cc185f617c2d4cd378035
 
 
 let _ = run_test_tt_main test
