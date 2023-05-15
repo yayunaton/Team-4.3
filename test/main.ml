@@ -570,15 +570,15 @@ let test_eventlist_g2 =
 
 
 let test_userlist_g2 : user list =
-  [ { name = "A"; debt = [ ("B", 425.0) ]; total_debt = 425.0 }
-  ; { name = "B"; debt = []; total_debt = -575.0 }
-  ; { name = "C"; debt = []; total_debt = -375.0 }
-  ; { name = "D"
-    ; debt = [ ("B", 50.0); ("C", 375.0) ]
+  [ { name = "D"; debt = [ ("B", 425.0) ]; total_debt = 425.0 }
+  ; { name = "A"
+    ; debt = [ ("B", 150.0); ("C", 275.0) ]
     ; total_debt = 425.0
     }
+  ; { name = "F"; debt = [ ("C", 100.0) ]; total_debt = 100.0 }
   ; { name = "E"; debt = []; total_debt = 0.0 }
-  ; { name = "F"; debt = [ ("B", 100.0) ]; total_debt = 100.0 }
+  ; { name = "C"; debt = []; total_debt = -375.0 }
+  ; { name = "B"; debt = []; total_debt = -575.0 }
   ]
 
 
@@ -1536,11 +1536,8 @@ let test =
        @ test_input3
        @ test_help_function_error
        @ test_LARGE1
-<<<<<<< HEAD
        @ testg2
-=======
        @ test_g3
->>>>>>> c7bde354af708b9cfa6e00de839ef69f11d49287
 
 
 (* let newtest = "" >::: test_g3 *)
