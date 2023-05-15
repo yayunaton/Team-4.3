@@ -162,7 +162,6 @@ let test_eventlist_9 : event list = [ test_event_9 ]
 
 let test_eventlist_10 : event list = [ test_event_10 ]
 
-       ; ( "test listDic.empty"
 (*A complicated debt relationship.*)
 let testevent_g1_1 : event =
   { event_name = "g1-1"
