@@ -1224,72 +1224,72 @@ let test_help_function_error =
 
 
 (*A VERY LARGE CASE, but this time it resolves to zero.*)
-let testevent_g2_1 : event =
-  { event_name = "g2-1"
+let testevent_LARGE_1 : event =
+  { event_name = "LARGE-1"
   ; payer_name = "Kenny"
   ; participants = [ "Alice"; "April" ]
   ; bill_amount = 600.0
   }
 
 
-let testevent_g2_2 : event =
-  { event_name = "g2-2"
+let testevent_LARGE_2 : event =
+  { event_name = "LARGE-2"
   ; payer_name = "Albert"
   ; participants = [ "Kenny"; "Alice"; "Molly" ]
   ; bill_amount = 800.0
   }
 
 
-let testevent_g2_3 : event =
-  { event_name = "g2-3"
+let testevent_LARGE_3 : event =
+  { event_name = "LARGE-3"
   ; payer_name = "Fiona"
   ; participants = [ "Alice" ]
   ; bill_amount = 800.0
   }
 
 
-let testevent_g2_4 : event =
-  { event_name = "g2-4"
+let testevent_LARGE_4 : event =
+  { event_name = "LARGE-4"
   ; payer_name = "Molly"
   ; participants = [ "Albert"; "Alice" ]
   ; bill_amount = 1200.0
   }
 
 
-let testevent_g2_5 : event =
-  { event_name = "g2-5"
+let testevent_LARGE_5 : event =
+  { event_name = "LARGE-5"
   ; payer_name = "Justin"
   ; participants = [ "Alice"; "Fiona" ]
   ; bill_amount = 600.0
   }
 
 
-let testevent_g2_6 : event =
-  { event_name = "g2-6"
+let testevent_LARGE_6 : event =
+  { event_name = "LARGE-6"
   ; payer_name = "Alice"
   ; participants = [ "Molly" ]
   ; bill_amount = 400.0
   }
 
 
-let testevent_g2_7 : event =
-  { event_name = "g2-7"
+let testevent_LARGE_7 : event =
+  { event_name = "LARGE-7"
   ; payer_name = "April"
   ; participants = [ "Alice"; "Stephen" ]
   ; bill_amount = 600.0
   }
 
 
-let testevent_g2_8 : event =
-  { event_name = "g2-8"
+let testevent_LARGE_8 : event =
+  { event_name = "LARGE-8"
   ; payer_name = "Stephen"
   ; participants = [ "Justin"; "Alice" ]
   ; bill_amount = 600.0
   }
 
 
-let testevent_g2_9 : event =
-  { event_name = "g2-9, the event that compromised them all"
+let testevent_LARGE_9 : event =
+  { event_name = "LARGE-9, the event that compromised them all"
   ; payer_name = "Alice"
   ; participants =
       [ "Molly"
@@ -1306,24 +1306,24 @@ let testevent_g2_9 : event =
   }
 
 
-let testevent_g2_10 : event =
-  { event_name = "g2-10"
+let testevent_LARGE_10 : event =
+  { event_name = "LARGE-10"
   ; payer_name = "Flora"
   ; participants = [ "George"; "Alice"; "Albert" ]
   ; bill_amount = 1400.0
   }
 
 
-let testevent_g2_11 : event =
-  { event_name = "g2-11"
+let testevent_LARGE_11 : event =
+  { event_name = "LARGE-11"
   ; payer_name = "Albert"
   ; participants = [ "Flora" ]
   ; bill_amount = 700.0
   }
 
 
-let testevent_g2_12 : event =
-  { event_name = "g2-12"
+let testevent_LARGE_12 : event =
+  { event_name = "LARGE-12"
   ; payer_name = "Alice"
   ; participants = [ "Molly" ]
   ; bill_amount = 300.0
@@ -1331,22 +1331,22 @@ let testevent_g2_12 : event =
 
 
 let test_eventlist_LARGE1 =
-  [ testevent_g2_1
-  ; testevent_g2_2
-  ; testevent_g2_3
-  ; testevent_g2_4
-  ; testevent_g2_5
-  ; testevent_g2_6
-  ; testevent_g2_7
-  ; testevent_g2_8
-  ; testevent_g2_9
-  ; testevent_g2_10
-  ; testevent_g2_11
-  ; testevent_g2_12
+  [ testevent_LARGE_1
+  ; testevent_LARGE_2
+  ; testevent_LARGE_3
+  ; testevent_LARGE_4
+  ; testevent_LARGE_5
+  ; testevent_LARGE_6
+  ; testevent_LARGE_7
+  ; testevent_LARGE_8
+  ; testevent_LARGE_9
+  ; testevent_LARGE_10
+  ; testevent_LARGE_11
+  ; testevent_LARGE_12
   ]
 
 
-let test_userlist_g2 : user list =
+let test_userlist_LARGE1 : user list =
   [ { name = "George"
     ; debt = [ ("Flora", 500.0); ("Molly", 50.0) ]
     ; total_debt = 550.0
@@ -1368,7 +1368,134 @@ let test_LARGE1 =
     >:: fun _ ->
     assert_equal
       (userlist_to_string (optimizer test_eventlist_LARGE1))
-      (userlist_to_string test_userlist_g2)
+      (userlist_to_string test_userlist_LARGE1)
+      ~printer:(fun str -> str) )
+  ]
+
+
+(*ANOTHER VERY LARGE CASE, but this time we keep complicated.*)
+let testevent_g3_1 : event =
+  { event_name = "g3-1"
+  ; payer_name = "Piong"
+  ; participants = [ "Kevin"; "Anastasia"; "Harvey" ]
+  ; bill_amount = 136.0
+  }
+
+
+let testevent_g3_2 : event =
+  { event_name = "g3-2"
+  ; payer_name = "Harvey"
+  ; participants = [ "Shelly"; "Quinn"; "Piong"; "Anastasia" ]
+  ; bill_amount = 185.0
+  }
+
+
+let testevent_g3_3 : event =
+  { event_name = "g3-3"
+  ; payer_name = "Christine"
+  ; participants = [ "Anastasia" ]
+  ; bill_amount = 18.0
+  }
+
+
+let testevent_g3_4 : event =
+  { event_name = "g3-4"
+  ; payer_name = "Christine"
+  ; participants = []
+  ; bill_amount = 1800.0
+  }
+
+
+let testevent_g3_5 : event =
+  { event_name = "g3-5"
+  ; payer_name = "Christine"
+  ; participants = [ "Kevin"; "Quinn"; "Harvey" ]
+  ; bill_amount = 224.0
+  }
+
+
+let testevent_g3_6 : event =
+  { event_name = "g3-6"
+  ; payer_name = "Quinn"
+  ; participants = [ "Christine"; "Shelly"; "Kevin" ]
+  ; bill_amount = 196.0
+  }
+
+
+let testevent_g3_7 : event =
+  { event_name = "g3-7"
+  ; payer_name = "Harvey"
+  ; participants = [ "Anastasia"; "Kevin"; "Shelly" ]
+  ; bill_amount = 88.0
+  }
+
+
+let testevent_g3_8 : event =
+  { event_name = "g3-8"
+  ; payer_name = "Anastasia"
+  ; participants = [ "Christine"; "Piong"; "Quinn"; "Shelly" ]
+  ; bill_amount = 165.0
+  }
+
+
+let testevent_g3_9 : event =
+  { event_name = "g3-9"
+  ; payer_name = "Kevin"
+  ; participants = [ "Piong" ]
+  ; bill_amount = 48.0
+  }
+
+
+let testevent_g3_10 : event =
+  { event_name = "g3-10"
+  ; payer_name = "Piong"
+  ; participants = [ "Kevin" ]
+  ; bill_amount = 68.0
+  }
+
+
+let test_eventlist_g3 =
+  [ testevent_g3_1
+  ; testevent_g3_2
+  ; testevent_g3_3
+  ; testevent_g3_4
+  ; testevent_g3_5
+  ; testevent_g3_6
+  ; testevent_g3_7
+  ; testevent_g3_8
+  ; testevent_g3_9
+  ; testevent_g3_10
+  ]
+
+
+let test_userlist_g3 : user list =
+  [ { name = "Kevin"
+    ; debt = [ ("Harvey", 124.); ("Christine", 47.) ]
+    ; total_debt = 171.0
+    }
+  ; { name = "Shelly"
+    ; debt =
+        [ ("Christine", 48.)
+        ; ("Piong", 42.)
+        ; ("Anastasia", 30.)
+        ; ("Quinn", 21.)
+        ]
+    ; total_debt = 141.
+    }
+  ; { name = "Quinn"; debt = []; total_debt = -21. }
+  ; { name = "Anastasia"; debt = []; total_debt = -30. }
+  ; { name = "Piong"; debt = []; total_debt = -42. }
+  ; { name = "Christine"; debt = []; total_debt = -95. }
+  ; { name = "Harvey"; debt = []; total_debt = -124. }
+  ]
+
+
+let test_g3 =
+  [ ( "test a LARGE AND COMPLICATED case. Can we optimize IT?"
+    >:: fun _ ->
+    assert_equal
+      (userlist_to_string (optimizer test_eventlist_g3))
+      (userlist_to_string test_userlist_g3)
       ~printer:(fun str -> str) )
   ]
 
@@ -1409,7 +1536,15 @@ let test =
        @ test_input3
        @ test_help_function_error
        @ test_LARGE1
+<<<<<<< HEAD
        @ testg2
+=======
+       @ test_g3
+>>>>>>> c7bde354af708b9cfa6e00de839ef69f11d49287
 
 
-let _ = run_test_tt_main test
+(* let newtest = "" >::: test_g3 *)
+
+let _ =
+  let _ = test in
+  run_test_tt_main test
