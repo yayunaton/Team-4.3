@@ -36,4 +36,6 @@ file is disproportionate. Here's our explanation to this:
   actually, through the "Large and Complicated" test cases we wrote that we ourselves 
   didn't know what we were testing - they were just large and complicated, so that 
   many well-hidden bugs could be triggered out. 
-Given all these, we think our project is heavily algo-based and test-dependent 
+Given all these, we think our project is heavily algo-based and test-dependent.
+Hence, the division of LOC between files may seem disproportionate, but we hope 
+you can consider that reasonable.
