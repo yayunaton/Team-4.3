@@ -301,7 +301,7 @@ let process_one_debter
         then current_debt := 0.
         else
           let first_record = List.nth recolist first_index in
-          if first_record.debt +. reco.debt <= 0.
+          if first_record.debt +. !current_debt <= 0.
           then (
             if !current_debt < 0.0000000001
             then current_debt := 0.
@@ -358,6 +358,7 @@ let optimizer (e : event list) : user list =
   let record2 = create_record e debt_record in
   (*STEP 2*)
   let sorted_record = record_lst_sort record2 in
+  (* print_endline (recordlist_to_string sorted_record) ; *)
   (*STEP 3. use list.rev because the sorting sequence is from least to
     most*)
   let result =
