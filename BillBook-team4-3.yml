@@ -23,11 +23,13 @@ git-repo: "https://github.com/yayunaton/Team-4.3"
 demo-video-url: ""
 # Write a short, attention-grabbing description of your project.
 desc: >
-  BillBook is a database for accounting management. It records transactions 
-  between group members and between a most-simplified debt relationship 
-  between members such that the time of transaction is minimized. 
-  For example, a group of people traveling together can note down payments 
-  such as booking a hotel, ordering a meal, and buying tickets in the system. 
-  The database stores these data and records transactions owed to one another. 
-  At the end of the activities, a group member can check his ownership to 
-  other members based on the data. 
+  BillBook is a database for debt management.
+  It lets you input events that involve payment
+    that needs to split between multiple event-participants while
+    the actual payer is only one person. It then optimizes the number
+    of transactions needed to clear the debt among all participants in
+    all inputted events, and outputs a string specifying who needs to
+    transfer how much to who and who's total debt is what. You can also
+    search for a special user's name to browse that user's current
+    debt condition with respect to all the events inputted, browse
+    all the events you've inputted, or delete an existing event.
