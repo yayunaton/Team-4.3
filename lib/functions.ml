@@ -81,7 +81,7 @@ let help_function fun_name =
     "summary: \n\
     \  Look over past events. \n\
     \ \n\
-     enter: \n\
+     record: \n\
     \  Enter an event to record the event name, payer, paritcipents, and bill \
      amount. \n\
     \ \n\
