@@ -519,7 +519,7 @@ let parse_test str evt =
 
 
 let to_row_test str evt =
-  "test parse" >:: fun _ -> assert_equal (event_to_row (parse_event evt)) str
+  "test to_row" >:: fun _ -> assert_equal (event_to_row (parse_event evt)) str
 
 
 let parse_tests : test list =
@@ -577,6 +577,99 @@ let to_row_tests : test list =
   ; to_row_test
       [ ""; "Alice"; "Bob_Charlie"; "50." ]
       [ ""; "Alice"; "Bob_Charlie"; "50." ]
+  ]
+
+
+let test_dbt_str dbt str =
+  "test debt_to_string" >:: fun _ -> assert_equal (debt_to_string dbt) str
+
+
+let test_usrlst lst str =
+  "test userlist_to_string"
+  >:: fun _ -> assert_equal (userlist_to_string lst) str
+
+
+let test_record r s =
+  "test recordlist_to_string"
+  >:: fun _ -> assert_equal (recordlist_to_string r) s
+
+
+let str_tests =
+  [ test_dbt_str [] "This person is out of debt!"
+  ; test_dbt_str [ ("A", 50.0) ] "[Owes A 50. dollars; ];"
+  ; test_dbt_str
+      [ ("A", 50.0); ("B", 50.0) ]
+      "[Owes A 50. dollars; Owes B 50. dollars; ];"
+  ; test_dbt_str [ ("", 50.0) ] "[Owes  50. dollars; ];"
+  ; test_dbt_str [ ("A", 0.0) ] "[Owes A 0. dollars; ];"
+  ; test_usrlst [] "\n"
+  ; test_usrlst
+      [ { name = "A"; debt = []; total_debt = 0.0 } ]
+      ( "\n"
+      ^ "{\n    name: "
+      ^ "A"
+      ^ ";\n    current debt: "
+      ^ debt_to_string []
+      ^ "\n    entire debt: "
+      ^ string_of_float 0.0
+      ^ "\n\
+        \    (a positive means this person is in debt; a negative means this \
+         person is a lender.)\n\
+         }"
+      ^ "\n" )
+  ; test_usrlst
+      [ { name = "A"; debt = [ ("B", 20.0) ]; total_debt = 20.0 } ]
+      ( "\n"
+      ^ "{\n    name: "
+      ^ "A"
+      ^ ";\n    current debt: "
+      ^ debt_to_string [ ("B", 20.0) ]
+      ^ "\n    entire debt: "
+      ^ string_of_float 20.0
+      ^ "\n\
+        \    (a positive means this person is in debt; a negative means this \
+         person is a lender.)\n\
+         }"
+      ^ "\n" )
+  ; test_usrlst
+      [ { name = ""; debt = [ ("B", 20.0); ("C", 20.0) ]; total_debt = 40.0 } ]
+      ( "\n"
+      ^ "{\n    name: "
+      ^ ""
+      ^ ";\n    current debt: "
+      ^ debt_to_string [ ("B", 20.0); ("C", 20.0) ]
+      ^ "\n    entire debt: "
+      ^ string_of_float 40.0
+      ^ "\n\
+        \    (a positive means this person is in debt; a negative means this \
+         person is a lender.)\n\
+         }"
+      ^ "\n" )
+  ; test_usrlst
+      [ { name = "A"; debt = []; total_debt = -40.0 } ]
+      ( "\n"
+      ^ "{\n    name: "
+      ^ "A"
+      ^ ";\n    current debt: "
+      ^ debt_to_string []
+      ^ "\n    entire debt: "
+      ^ string_of_float (-40.0)
+      ^ "\n\
+        \    (a positive means this person is in debt; a negative means this \
+         person is a lender.)\n\
+         }"
+      ^ "\n" )
+  ; test_record [] ""
+  ; test_record [ { name = "A"; debt = 0.0 } ] "{ A 0. }"
+  ; test_record
+      [ { name = "A"; debt = 0.0 }; { name = "B"; debt = 0.0 } ]
+      "{ A 0. }{ B 0. }"
+  ; test_record
+      [ { name = "A"; debt = 30.0 }; { name = "B"; debt = 20.0 } ]
+      "{ A 30. }{ B 20. }"
+  ; test_record
+      [ { name = "A"; debt = -30.0 }; { name = "B"; debt = -20.0 } ]
+      "{ A -30. }{ B -20. }"
   ]
 
 
@@ -984,6 +1077,7 @@ let test =
        @ test_rcsort2
        @ test_rcsort3
        @ test_rcsort4
+       @ str_tests
 
 
 let _ = run_test_tt_main test
