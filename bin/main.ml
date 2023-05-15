@@ -8,8 +8,10 @@ print_endline "For more information of functionalities, enter 'help'. "
 open Functions
 
 let events = read_csv_file "test.csv"
+let updated = ref false
+let usrlst : user list ref = ref []
 
-let rec action first_input evts =
+let rec action first_input evts updt lst =
   match first_input with
   | [ "quit" ] -> exit 0
   | "summary" :: _ ->
@@ -27,6 +29,7 @@ let rec action first_input evts =
       let evt = input_event a b c d in
       let evt_lst = [ evt ] in
       see_event evt;
+      updt := false;
       write_csv_file "test.csv" (List.append evts evt_lst)
   | "check" :: _ ->
       print_endline "Enter the name of the event: ";
@@ -44,15 +47,26 @@ let rec action first_input evts =
         List.filter (fun evt -> evt.event_name <> event_name) evts
       in
       write_csv_file "test.csv" remaining_events;
+      updt := false;
       print_endline "The event has been deleted."
   | "debt" :: _ ->
-      print_endline "Debts summaried as follows: ";
-      let user_list = optimizer evts in
-      print_endline (userlist_to_string user_list)
+      if !updt = false then (
+        print_endline "Debts summaried as follows: ";
+        updt := true;
+        let user_list = optimizer evts in
+        lst := user_list;
+        print_endline (userlist_to_string user_list))
+      else print_endline (userlist_to_string !lst)
   | "mydebt" :: _ -> (
       print_endline "Enter the name of the user: ";
       let user_name = String.trim (input_line stdin) in
-      let user_list = optimizer evts in
+      let user_list =
+        if !updt = false then (
+          updt := true;
+          lst := optimizer evts;
+          !lst)
+        else !lst
+      in
       let user = List.find_opt (fun user -> user.name = user_name) user_list in
       match user with
       | Some u -> print_endline (user_to_string u)
@@ -66,12 +80,12 @@ let rec action first_input evts =
       let second_input =
         String.split_on_char ' ' (String.trim (input_line stdin))
       in
-      action second_input evts
+      action second_input evts updt lst
 
 let () =
   let rec wait_for_command () =
     let input = String.split_on_char ' ' (String.trim (input_line stdin)) in
-    action input events;
+    action input events updated usrlst;
     wait_for_command ()
   in
   wait_for_command ()
